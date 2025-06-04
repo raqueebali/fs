@@ -1,0 +1,25 @@
+query 13
+
+/*Write a query to fetch details of employees with the address as “DELHI(DEL)”.
+
+*/
+
+
+mysql> select * from EmployeeInfo where Address="Delhi(DEL)";
++-------+----------+----------+------------+---------+------------+------------+--------+
+| EmpID | EmpFname | EmpLname | Department | Project | Address    | DOB        | Gender |
++-------+----------+----------+------------+---------+------------+------------+--------+
+|     2 | Ananya   | Mishra   | Admin      | P2      | Delhi(DEL) | 1968-05-02 | F      |
+|     5 | Ankit    | Kapoor   | Admin      | P2      | Delhi(DEL) | 1994-07-03 | M      |
++-------+----------+----------+------------+---------+------------+------------+--------+
+2 rows in set (0.00 sec)
+
+
+mysql> select * from EmployeeInfo where Address in ("Delhi(DEL)");
++-------+----------+----------+------------+---------+------------+------------+--------+
+| EmpID | EmpFname | EmpLname | Department | Project | Address    | DOB        | Gender |
++-------+----------+----------+------------+---------+------------+------------+--------+
+|     2 | Ananya   | Mishra   | Admin      | P2      | Delhi(DEL) | 1968-05-02 | F      |
+|     5 | Ankit    | Kapoor   | Admin      | P2      | Delhi(DEL) | 1994-07-03 | M      |
++-------+----------+----------+------------+---------+------------+------------+--------+
+2 rows in set (0.00 sec)

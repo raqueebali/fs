@@ -1,0 +1,172 @@
+15-2-23(cp)
+/*
+Given an integer array nums and an integer k, you are asked to construct the array 
+ans of size n-k+1 where ans[i] is the number of distinct numbers in the subarray 
+nums[i:i+k-1] = [nums[i], nums[i+1], ..., nums[i+k-1]]. Return the array ans.
+
+Example 1:
+Input: nums = [1,2,3,2,2,1,3], k = 3
+Output: [3,2,2,2,3]
+Explanation: The number of distinct elements in each subarray goes as follows:
+- nums[0:2] = [1,2,3] so ans[0] = 3
+- nums[1:3] = [2,3,2] so ans[1] = 2
+- nums[2:4] = [3,2,2] so ans[2] = 2
+- nums[3:5] = [2,2,1] so ans[3] = 2
+- nums[4:6] = [2,1,3] so ans[4] = 3
+
+
+Example 2:
+
+Input: nums = [1,1,1,1,2,3,4], k = 4
+Output: [1,2,3,4]
+Explanation: The number of distinct elements in each subarray goes as follows:
+- nums[0:3] = [1,1,1,1] so ans[0] = 1
+- nums[1:4] = [1,1,1,2] so ans[1] = 2
+- nums[2:5] = [1,1,2,3] so ans[2] = 3
+- nums[3:6] = [1,2,3,4] so ans[3] = 4
+
+TIME COMPLEXITY:
+
+The time complexity to O(n) by using the sliding window technique
+
+The idea is to store the frequency of elements in the current window in a map and keep track of
+the distinct elements count in the current window (of size k). The code can be optimized to 
+derive the count of elements in any window using the count of elements in the previous
+window by inserting the new element to the previous window from its right and removing
+an element from its left. Write
+
+
+Input:
+enter array elements size
+7
+enter the elements
+1 2 3 2 2 1 3
+enter the subarray size
+3
+Output:
+The count of distinct elements in subarray [0, 2] is 3
+The count of distinct elements in subarray [1, 3] is 2
+The count of distinct elements in subarray [2, 4] is 2
+The count of distinct elements in subarray [3, 5] is 2
+The count of distinct elements in subarray [4, 6] is 3
+
+
+*/
+
+import java.util.*;
+class Test{
+    public static void DistinctCount(int[]a,int k){
+        Map<Integer,Integer>freq=new HashMap<>();
+        int dist_count=0;
+        for(int i=0;i<a.length;i++){
+            if(i>=k){
+                freq.put(a[i-k],freq.getOrDefault(a[i-k],0)-1);
+                if(freq.get(a[i-k])==0){
+                    dist_count--;
+                }
+            }
+            freq.put(a[i],freq.getOrDefault(a[i],0)+1);
+            if(freq.get(a[i])==1){
+                dist_count++;
+            }
+            if(i>=k-1){
+                System.out.println("The count of distinct elements in subarray [" +
+(i - k + 1) + ", " + i + "]" + " is " + dist_count);
+            }
+        }
+    }
+    public static void main(String[]args){
+        Scanner sc=new Scanner(System.in);
+        System.out.println("enter array elements size");
+        int n=sc.nextInt();
+        int a[]=new int[n];
+        System.out.println("enter the elements");
+        for(int i=0;i<n;i++){
+            a[i]=sc.nextInt();
+        }
+        System.out.println("enter the subarray size");
+        int k=sc.nextInt();
+        DistinctCount(a,k);
+        
+    }
+}
+
+
+
+9-2-23
+/*
+Given two strings s and t, return true if they are both one edit distance apart, 
+otherwise return false.
+
+A string s is said to be one distance apart from a string t if you can:
+
+Insert exactly one character into s to get t.
+Delete exactly one character from s to get t.
+Replace exactly one character of s with a different character to get t.
+
+Example 1:
+Input: s = "ab", t = "acb"
+Output: true
+Explanation: We can insert 'c' into s to get t.
+
+Example 2:
+Input: s = "", t = ""
+Output: false
+Explanation: We cannot get t from s by only one step.
+
+
+
+Explanation:
+In order to have only one edit distance, s and t should only have the same length or have 
+one length difference.When their lengths are the same, s and t should have only
+one character difference.When their length differences are one, check if the longer string 
+can remove one character to be the shorter string.
+
+
+case=1
+input=
+ab                                                                                                                      
+acb                                                                                                                     
+output=
+true
+
+case=2
+input=
+""
+""
+output=
+false
+
+*/
+import java.util.*;
+class Test{
+    public static boolean distance(String s,String t){
+        Map<String,String>mp=new HashMap<>();
+        int a=s.length();
+        int b=t.length();
+        int min=0;
+        if(Math.abs(a-b)>1){
+            return false;
+        }
+        for(int i=0;i<Math.min(a,b);i++){
+            if(s.charAt(i)!=t.charAt(i)){
+                if(a==b){
+                    return s.substring(i+1).equals(t.substring(i+1));
+                }
+                else if(a<b){
+                    return s.substring(i).equals(t.substring(i+1));
+                }
+                else{
+                    return s.substring(i+1).equals(t.substring(i));
+                }
+            }
+        }
+        return Math.abs(a-b)==1;
+    }
+    public static void main(String[]args){
+        Scanner sc=new Scanner(System.in);
+        String s=sc.next();
+        String t=sc.next();
+        System.out.println(distance(s,t));
+    }
+}

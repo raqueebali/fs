@@ -1,0 +1,279 @@
+prog 3
+
+/*
+Nagesh has given two words to check whether the first word 'source' is a sub-series of second word 'target'.
+
+A sub-series from a word can be formed by removing 0 or more characters without changing the relative order of other characters in the word.
+
+For example, 'nest' is a subseries of a word 'interst' , where as 'rest' is not.
+
+Help Nagesh to return true if source is a subseries of target, otherwise false.
+
+Constraints:
+ 0 <= source.length <= 100
+ 0 <= target.length <= 10^4
+ source and target consist only of lowercase English letters.
+
+Input Format:
+-------------
+Line-1:Two space separeted strings
+
+ 
+Output Format:
+--------------
+Print a boolean result.
+ 
+ 
+Sample Input-1:
+---------------
+pqsv pqrstuv
+ 
+Sample Output-1:
+----------------
+true
+
+Sample Input-2:
+---------------
+psr pqrst
+
+Sample Output-2:
+----------------
+false
+
+
+
+case=1
+input=
+abc
+ahbgdc
+output=
+true
+
+
+case=2
+input=
+axc
+ahbgdc
+output=
+false
+*/
+import java.util.*;
+class Test{
+    public boolean check(String s,String t,int m,int n){
+        if(m==0){
+            return true;
+        }
+        if(n==0){
+            return false;
+        }
+        if(s.charAt(m-1)==t.charAt(n-1))
+            return check(s,t,m-1,n-1);
+        return check(s,t,m,n-1);
+    }
+    public static void main(String[]args){
+        Scanner sc=new Scanner(System.in);
+        String s=sc.next();
+        String t=sc.next();
+        int m=s.length();
+        int n=t.length();
+        System.out.println(new Test().check(s,t,m,n));
+    }
+}
+
+
+prog2
+
+
+/*
+Given an array of integers, return the maximum sum for a non-empty subarray (contiguous elements) with at
+most one element deletion. In other words, you want to choose a subarray and optionally delete one element
+from it so that there is still at least one element left and the sum of the remaining elements is maximum
+possible.
+Note that the subarray needs to be non-empty after deleting one element.
+
+Example 1:
+Input: arr = [1,-2,0,3]
+Output: 4
+Explanation: Because we can choose [1, -2, 0, 3] and drop -2, thus the subarray [1, 0, 3]
+becomes the maximum value.
+
+Example 2:
+Input: arr = [1,-2,-2,3]
+Output: 3
+Explanation: We just choose [3] and it's the maximum sum.
+
+Example 3:
+Input: arr = [-1,-1,-1,-1]
+Output: -1
+Explanation: The final subarray needs to be non-empty. You can't choose [-1] and delete -1
+from it, then get an empty subarray to make the sum equals to 0.
+
+
+
+Test cases:
+case=1
+input=
+4
+1 -2 0 3
+output=
+4
+
+case=2
+input=
+4
+1 -2 -2 3
+output=
+3
+
+
+case=3
+input=
+4
+-1 -1 -1 -1
+output=
+-1
+*/
+import java.util.*;
+class Test{
+    public int method(int nums[]){
+        int min=Integer.MIN_VALUE/2;
+        int ans=min;
+        int zero=min;
+        int one=min;
+        for(int i:nums){
+            one=Math.max(i,Math.max(one+i,zero));
+            zero=Math.max(i,zero+i);
+            ans=Math.max(ans,one);
+        }
+        return ans;
+    }
+    public static void main(String[]args){
+        Scanner sc=new Scanner(System.in);
+        int n=sc.nextInt();
+        int arr[]=new int[n];
+        for(int i=0;i<n;i++){
+            arr[i]=sc.nextInt();
+        }
+        System.out.println(new Test().method(arr));
+    }
+}
+
+
+
+prog1
+
+/*
+Mr. James professor of at MIT, as a part of assignment he created a
+problem statement related to words.
+He gave a word w and asked them to design a method to 
+return the longest substring w1 in word w ,where w1 in reverse is also equal to w1.
+
+NOTE: Alphabets are case sensitive
+
+
+Input Format:
+-------------
+A string S, consist of lowercase/uppercase letters or/and digits
+
+Output Format:
+--------------
+Print a string.
+
+
+Sample Input-1:
+---------------
+abbbabbcbbacdb
+
+Sample Output-1:
+----------------
+abbcbba
+
+
+Sample Input-2:
+---------------
+thedivideriswide
+
+Sample Output-2:
+----------------
+edivide
+
+
+*/
+// import java.util.*;
+// class Test{
+//     public String Assign(String str){
+//         // for(int i=0;i<str.length();i++){
+//         //     while(i>0){
+//         //         if(sb.charAt(i)==sb.charAt(i-1)){
+//         //             i++;
+//         //         }
+//         //         else{
+//         //             i--;
+//         //         }
+//         //     }
+//         //     if(sb.reverse(i)==str.length()){
+//         //         return sb.substring(i);
+//         //     }
+//         // }
+//         int i=0,j=str.length()-1;
+//         while(i<j){
+//             if(str.charAt(i)==str.charAt(j)){
+//                  String sb=str.substring(i,j+1);
+//                  StringBuilder temp=new StringBuilder(sb);
+//                  sb=(temp.reverse()).toString();
+//                 if(sb.equals(str.substring(i,j+1))){
+//                     return sb;
+//                 }
+//             }
+//             i++;
+//             j--;
+//         }
+        
+//         return str;
+//     }
+//     public static void main(String[]args){
+//         Scanner sc=new Scanner(System.in);
+//         String str=sc.next();
+//         System.out.println(new Test().Assign(str));
+//     }
+// }
+
+import java.util.*;
+class Test{
+    public static void main (String[] args) {
+        Scanner sc=new Scanner(System.in);
+        String s=sc.next();
+        List<String>li=new ArrayList<String>();
+        for(int i=0;i<s.length();i++){
+            for(int j=i+1;j<=s.length();j++){
+                li.add(s.substring(i,j));
+            }
+        }
+        String res="";
+        int max=Integer.MIN_VALUE;
+        for(String k:li){
+            if(fun(k)==true && k.length()>max){
+                max=k.length();
+                res=k;
+            }
+        }
+        System.out.println(res);
+    }
+    public static boolean fun(String s){
+        String some=s;
+        char ch[]=some.toCharArray();
+        int i=0,j=some.length()-1;
+        while(i<j){
+            char hc=ch[i];
+            ch[i]=ch[j];
+            ch[j]=hc;
+            i++;
+            j--;
+        }
+        String kk=new String(ch);
+        if(some.equals(kk)){
+            return true;
+        }
+        return false;
+    }
+}

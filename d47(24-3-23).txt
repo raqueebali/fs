@@ -1,0 +1,96 @@
+prog 4
+
+/*
+Given the root of a binary tree, return all root-to-leaf paths in any order.
+
+A leaf is a node with no children.
+
+ 
+
+Example 1:
+Input: root = [1,2,3,null,5]
+Output: ["1->2->5","1->3"]
+
+Example 2:
+Input: root = [1]
+Output: ["1"]
+
+
+
+
+case=1
+input=
+1 2 3 -1 5
+output=
+1->2->5
+1->3
+
+case=2
+input=
+1
+output=
+1
+
+*/
+import java.util.*;
+
+class TreeNode {
+    int val;
+    TreeNode left;
+    TreeNode right;
+    TreeNode(int x) { val = x; }
+}
+
+class Test{
+    public static List<String> binaryTreePaths(TreeNode root) {
+        List<String> paths = new ArrayList<>();
+        if (root == null) {
+            return paths;
+        }
+        traverse(root, "", paths);
+        return paths;
+    }
+    
+    private static void traverse(TreeNode node, String path, List<String> paths) {
+        if (node.left == null && node.right == null) {
+            paths.add(path + node.val);
+            return;
+        }
+        if (node.left != null) {
+            traverse(node.left, path + node.val + "->", paths);
+        }
+        if (node.right != null) {
+            traverse(node.right, path + node.val + "->", paths);
+        }
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        String[] input = sc.nextLine().split(" ");
+
+        TreeNode root = new TreeNode(Integer.parseInt(input[0]));
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.offer(root);
+
+        int i = 1;
+        while (!queue.isEmpty() && i < input.length) {
+            TreeNode curr = queue.poll();
+            if (!input[i].equals("-1")) {
+                curr.left = new TreeNode(Integer.parseInt(input[i]));
+                queue.offer(curr.left);
+            }
+            i++;
+            if (!input[i].equals("-1")) {
+                curr.right = new TreeNode(Integer.parseInt(input[i]));
+                queue.offer(curr.right);
+            }
+            i++;
+        }
+
+        List<String> paths = binaryTreePaths(root);
+        for (String path : paths) {
+            System.out.println(path);
+        }
+    }
+}
+

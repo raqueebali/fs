@@ -1,0 +1,155 @@
+/*Write a java Program for Below Pattern
+input:
+How Many Rows You Want In Your Pyramid
+9
+output:
+
+1 2 3 4 5 6 7 8 9 8 7 6 5 4 3 2 1
+  1 2 3 4 5 6 7 8 7 6 5 4 3 2 1
+    1 2 3 4 5 6 7 6 5 4 3 2 1
+      1 2 3 4 5 6 5 4 3 2 1
+        1 2 3 4 5 4 3 2 1
+          1 2 3 4 3 2 1
+            1 2 3 2 1
+              1 2 1
+                1
+*/
+import java.util.*;
+class Test{
+    public static void main (String[] args) {
+        Scanner sc=new Scanner(System.in);
+        System.out.println("How Many Rows You Want In Your Pyramid");
+        int n=sc.nextInt();
+        int count=n;
+            for(int i=0;i<n;i++){
+                for(int j=1;j<=i*2;j++){
+                    System.out.print(" ");
+                }
+                for(int j=1;j<=count;j++){
+                    System.out.print(j+" ");
+                }
+                for(int j=count-1;j>=1;j--){
+                    System.out.print(j+" ");
+                }
+                System.out.println("");
+                count--;
+            }
+        }
+    }
+
+
+
+
+/*Write a java program to find given number is perfect power or not
+
+Given a positive integer which fits in a 32 bit signed integer,
+find if it can be expressed as A^P where 10 > P > 1 and A > 0. 
+A and P both should be integers.
+
+Sample input/output
+input=125
+output=True  
+
+explanation
+as 5^3 = 125. 
+
+input=5
+output=False
+
+*/
+import java.util.*;
+class Test{
+    public static void main(String[]args){
+        Scanner sc=new Scanner(System.in);
+        int n=sc.nextInt();
+        int a,flag=0;
+        for(a=1;a<1000;a++){
+            for(int p=2;p<10;p++){
+                if(n==Math.pow(a,p)){
+                    System.out.println("true");
+                    flag=1;
+                    break;
+                }
+            }
+        }
+        if(flag!=1){
+            System.out.println("false");
+        }
+    }
+}
+
+
+
+/*
+Given a string s , find the first non-repeating character in it and return its index.
+If it does not exist, return -1 .
+
+Example 1:
+Input: s = "techtricks"
+Output: 1
+Example 2:
+Input: s = "leetcode"
+Output: 0
+Example 3:
+Input: s = "aabb"
+Output: -1
+Example 4
+Input: S = "mindorks"
+Output: 0
+
+Testcases:
+
+case=1
+input=
+leetcode
+output=
+0
+
+case=2
+input=
+mymy
+output=
+-1
+
+case=3
+input=
+techtricks
+output=
+1
+
+case=4
+input=
+mindorks
+output=
+0
+
+*/
+import java.util.*;
+class Test{
+    public static int Unique(String str){
+        int c[]=new int[26];
+        int n=str.length();
+        for(int i=0;i<n;i++){
+            int index=str.charAt(i)-'a';
+            c[index]++;
+        }
+        for(int i=0;i<n;i++){
+            int index=str.charAt(i)-'a';
+            if(c[index]==1){
+                return i;
+            }
+        }
+        return -1;
+    }
+    public static void main (String[] args) {
+        Scanner sc=new Scanner(System.in);
+        String s=sc.next();
+        System.out.println(Unique(s));
+        
+    }
+}
+
+
+
+
+

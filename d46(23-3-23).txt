@@ -1,0 +1,197 @@
+prog 1
+
+
+/*
+A path in a binary tree is a sequence of nodes where each pair of adjacent nodes in the sequence has an edge connecting them. A node can only appear in the sequence at most once. Note that the path does not need to pass through the root.
+
+The path sum of a path is the sum of the node's values in the path.
+
+Given the root of a binary tree, return the maximum path sum of any non-empty path.
+
+ 
+Example 1:
+Input: root = [1,2,3]
+Output: 6
+Explanation: The optimal path is 2 -> 1 -> 3 with a path sum of 2 + 1 + 3 = 6.
+
+Example 2:
+Input: root = [-10,9,20,null,null,15,7]
+Output: 42
+Explanation: The optimal path is 15 -> 20 -> 7 with a path sum of 15 + 20 + 7 = 42.
+
+
+
+case=1
+input=
+1 2 3
+output=
+6
+case=2
+input=
+-10 9 20 -1 -1 15 7
+output=
+42
+
+*/
+import java.util.*;
+
+class TreeNode {
+    int val;
+    TreeNode left;
+    TreeNode right;
+    TreeNode(int x) { val = x; }
+}
+
+class Test{
+    private static int maxPathSum = Integer.MIN_VALUE;
+    
+    public static int maxPathSum(TreeNode root) {
+        if (root == null) {
+            return 0;
+        }
+        maxGain(root);
+        return maxPathSum;
+    }
+    
+    private static int maxGain(TreeNode node) {
+        if (node == null) {
+            return 0;
+        }
+        int leftGain = Math.max(maxGain(node.left), 0);
+        int rightGain = Math.max(maxGain(node.right), 0);
+        int pathSum = node.val + leftGain + rightGain;
+        maxPathSum = Math.max(maxPathSum, pathSum);
+        return node.val + Math.max(leftGain, rightGain);
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        String[] input = sc.nextLine().split(" ");
+
+        TreeNode root = new TreeNode(Integer.parseInt(input[0]));
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.offer(root);
+
+        int i = 1;
+        while (!queue.isEmpty() && i < input.length) {
+            TreeNode curr = queue.poll();
+            if (!input[i].equals("-1")) {
+                curr.left = new TreeNode(Integer.parseInt(input[i]));
+                queue.offer(curr.left);
+            }
+            i++;
+            if (!input[i].equals("-1")) {
+                curr.right = new TreeNode(Integer.parseInt(input[i]));
+                queue.offer(curr.right);
+            }
+            i++;
+        }
+
+        int maxSum = maxPathSum(root);
+        System.out.println(maxSum);
+    }
+}
+
+
+prog 2
+
+/*
+You are given the root of a binary tree containing digits from 0 to 9 only.
+Each root-to-leaf path in the tree represents a number.
+
+For example, the root-to-leaf path 1 -> 2 -> 3 represents the number 123.
+Return the total sum of all root-to-leaf numbers. Test cases are generated so that the answer will fit in a 32-bit integer.
+
+A leaf node is a node with no children.
+
+Example 1:
+Input: root = [1,2,3]
+Output: 25
+Explanation:
+The root-to-leaf path 1->2 represents the number 12.
+The root-to-leaf path 1->3 represents the number 13.
+Therefore, sum = 12 + 13 = 25.
+
+Example 2:
+Input: root = [4,9,0,5,1]
+Output: 1026
+Explanation:
+The root-to-leaf path 4->9->5 represents the number 495.
+The root-to-leaf path 4->9->1 represents the number 491.
+The root-to-leaf path 4->0 represents the number 40.
+Therefore, sum = 495 + 491 + 40 = 1026.
+
+
+case=1
+input=
+1 2 3
+output=
+25
+
+case=2
+input=
+4 9 0 5 1
+output=
+1026
+*/
+import java.util.*;
+class TreeNode {
+    int val;
+    TreeNode left;
+    TreeNode right;
+    TreeNode(int x) { val = x; }
+}
+
+class Test{
+    int sum; 
+    public int sumNumbers(TreeNode root) {
+        sum = 0;
+        if(root != null) 
+            sumNumbers(root, 0);
+        return sum;
+    }
+    private void sumNumbers(TreeNode root, int cur){
+        cur = cur * 10 + root.val;
+        // leaf node
+        if(root.left == null && root.right == null) {
+            sum += cur;
+            return;
+        }
+
+        if(root.left != null) sumNumbers(root.left,cur);
+        if(root.right != null) sumNumbers(root.right,cur);
+    }
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        // Read the input tree as a level-order traversal
+        TreeNode root = null;
+        Queue<TreeNode> queue = new LinkedList<>();
+        while (scanner.hasNextInt()) {
+            int val = scanner.nextInt();
+            TreeNode node = (val == -1) ? null : new TreeNode(val);
+            if (root == null) {
+                root = node;
+            } else {
+                TreeNode parent = queue.peek();
+                if (parent.left == null) {
+                    parent.left = node;
+                } else {
+                    parent.right = node;
+                    queue.remove();
+                }
+            }
+            if (node != null) {
+                queue.add(node);
+            }
+        }
+
+        // Compute the sum of root-to-leaf numbers
+        Test test = new Test();
+        int sum = test.sumNumbers(root);
+
+        // Print the result
+        System.out.println(sum);
+    }
+      
+}

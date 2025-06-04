@@ -1,0 +1,497 @@
+/* program-1   CP_U_V_Number of Distinct Islands using Union and Find Algoritm
+
+
+Given a non-empty 2D arraygridof 0's and 1's, an island is a group of1's (representing land) connected 4-directionally (horizontal or vertical.) You may assume all four edges of the grid are surrounded by water.
+
+Count the number of distinct islands. An island is considered to be the same as another if and only if one island can be translated (and not rotated or reflected) to equal the other.
+
+Example 1:
+
+11000
+11000
+00011
+00011
+Given the above grid map, return 1.
+
+Example 2:
+
+11011
+10000
+00001
+11011
+Given the above grid map, return 3.
+
+Notice that:
+
+11
+1
+and
+
+ 1
+11
+are considered different island shapes, because we do not consider reflection / rotation.
+
+Note: The length of each dimension in the givengriddoes not exceed 50.
+
+Thoughts:
+
+Distinct islands: island 2d coordinates sets are distinct based off its offset
+
+
+case =1
+input =4 5
+1 1 0 0 0
+1 1 0 0 0
+0 0 0 1 1
+0 0 0 1 1
+output =1
+
+case =2
+input =5 5
+1 1 0 1 1
+1 0 0 0 1
+0 0 0 0 0
+1 0 0 0 1
+1 1 0 1 1
+output =4
+
+*/
+import java.util.*;
+
+class Solution {
+    int[][] ds = {{1,0}, {-1,0}, {0, 1}, {0, -1}};
+    
+    public int numDistinctIslands(int[][] grid) {
+        int m = grid.length, n = grid[0].length;
+        UFS set = new UFS(m * n);
+        List<int[]> ones = new ArrayList<>();
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if (grid[i][j] == 1) {
+                    int[] pos = new int[2];
+                    pos[0] = i;
+                    pos[1] = j;
+                    ones.add(pos);
+                    for (int[] d : ds) {
+                        int ni = i + d[0], nj = j + d[1];
+                        if (ni < 0 || ni >= m || nj < 0 || nj >= n || grid[ni][nj] != 1) continue;
+                        set.union(i * n + j , ni * n + nj);
+                    }
+                }
+            }
+        }
+        
+        // Move all pos to (0, 0)
+        HashMap<Integer, Queue<int[]>> map = new HashMap<>();
+        for (int[] pos : ones) {
+            int x = pos[0], y = pos[1], p = set.find(x * n + y);
+            Queue<int[]> queue = map.getOrDefault(p, new LinkedList<int[]>());
+            queue.add(pos);
+            map.put(p, queue);
+        }
+        
+        HashSet<String> strs = new HashSet<>();
+        for (int k : map.keySet()) {
+            Queue<int[]> queue = map.get(k);
+            int[] dd = queue.peek();
+            int dx = dd[0], dy = dd[1];
+            StringBuilder sb = new StringBuilder();
+            while (!queue.isEmpty()) {
+                int[] cur = queue.remove();
+                sb.append(cur[0] - dx);
+                sb.append(",");
+                sb.append(cur[1] - dy);
+                sb.append(";");
+            }
+            strs.add(sb.toString());
+        }
+        
+        return strs.size();
+    }
+    
+    class UFS {
+        int[] parents;
+        int[] ranks;
+        
+        public UFS(int n) {
+            parents = new int[n];
+            for (int i = 0; i < n; i++) {
+                parents[i] = i;
+            }
+            ranks = new int[n];
+        }
+        
+        public int find(int x) {
+            int px = parents[x];
+            if (px != x) {
+                parents[x] = find(px);
+            }
+            return parents[x];
+        }
+        
+        public boolean union(int x, int y) {
+            int px = find(x), py = find(y);
+            if (px == py) {
+                return true;
+            }
+            
+            if (ranks[px] < ranks[py]) {
+                parents[px] = py;
+            } else if (ranks[px] > ranks[py]) {
+                parents[py] = px;
+            } else {
+                parents[py] = px;
+                ranks[px]++;
+            }
+            
+            return false;
+        }
+    }
+}
+
+public class Test
+{
+	public static void main(String args[]){
+		Scanner sc=new Scanner(System.in);
+		int m=sc.nextInt();
+		int n=sc.nextInt();
+		int grid[][]=new int[m][n];
+		for(int i=0;i<m;i++)
+			for(int j=0;j<n;j++)
+				grid[i][j]=sc.nextInt();
+				
+		System.out.println(new Solution().numDistinctIslands(grid));
+	}
+}
+
+
+
+
+
+
+/*program-2 CP_U_IV_TOPOLOGICAL SORT:-course schedule leetcode-210
+
+
+There are a total of numCourses courses you have to take, labeled from 0 to numCourses - 1. You are given an array prerequisites where prerequisites[i] = [ai, bi] indicates that you must take course bi first if you want to take course ai.
+
+For example, the pair [0, 1], indicates that to take course 0 you have to first take course 1.
+Return the ordering of courses you should take to finish all courses. If there are many valid answers, return any of them. If it is impossible to finish all courses, return an empty array.
+
+ 
+
+Example 1:
+Input: numCourses = 2, prerequisites = [[1,0]]
+Output: [0,1]
+Explanation: There are a total of 2 courses to take. To take course 1 you should have finished course 0. So the correct course order is [0,1].
+
+Example 2:
+Input: numCourses = 4, prerequisites = [[1,0],[2,0],[3,1],[3,2]]
+Output: [0,2,1,3]
+Explanation: There are a total of 4 courses to take. To take course 3 you should have finished both courses 1 and 2. Both courses 1 and 2 should be taken after you finished course 0.
+So one correct course order is [0,1,2,3]. Another correct ordering is [0,2,1,3].
+
+
+Example 3:
+Input: numCourses = 1, prerequisites = []
+Output: [0]
+
+
+
+Input Format:
+-------------
+Line-1: An integer K, number of subjects.
+Line-2: An integer C, number of conditions.
+Next C lines: Two space separated integers, Xi and Yi.
+
+Output Format:
+--------------
+Return a list of integers, the ordering of subjects that a graduate should take to finish all subjects
+
+
+Sample Input-1:
+---------------
+4
+3
+1 2
+3 0
+0 1
+
+Sample Output-1:
+----------------
+[2, 1, 0, 3]
+
+Explanation-1:
+--------------
+There are a total of 4 courses to take. 
+Subject 1  should be taken after you finished subject 2.
+Subject 3  should be taken after you finished subject 0.
+Subject 0  should be taken after you finished subject 1.
+So the correct subject order is [2, 1, 0, 3].
+
+Sample Input-2:
+---------------
+5
+5
+0 1
+1 2
+2 3
+3 4
+4 0
+
+Sample Output-2:
+----------------
+[]
+
+
+Explanation-2:
+-------------
+No subject can be completed because they depend on each other.
+
+
+case =1
+input =4
+3
+1 2
+3 0
+0 1
+output =[2, 1, 0, 3]
+
+case =2
+input =5
+4
+2 4
+3 1
+0 2
+4 3
+output =[1, 3, 4, 2, 0]
+
+case =3
+input =4
+4
+1 0
+2 0
+3 1
+3 2
+output =[0, 1, 2, 3]
+
+
+*/
+import java.util.*;
+import java.io.*;
+
+class Test{
+    public int[] findOrder(int numCourses, int[][] prerequisites) {
+        // just do topological ordering
+        // n courses: ranging from 0 to n-1
+        // also need to construct a graph according to the prerequisites
+        List[] graph = new ArrayList[numCourses];
+        for (int i = 0; i < numCourses; i++) graph[i] = new ArrayList<Integer>();
+        
+        int[] indegree = new int[numCourses];
+        for (int[] p : prerequisites) {
+            int u = p[1], v = p[0]; // from u->v
+            graph[u].add(v);
+            indegree[v]++;
+        }
+        
+        int[] order = new int[numCourses];
+        int index = 0;
+        Queue<Integer> queue = new LinkedList<Integer>();
+        for (int i = 0; i < numCourses; i++) {
+            if (indegree[i] == 0) queue.add(i);
+        }
+        
+        // start from indegree=0, add the neighbors to the queue
+        // if indegree becomes 0, add to queue
+        while (!queue.isEmpty()) {
+            int u = queue.poll();
+            order[index++] = u;
+            for (int v : (List<Integer>)graph[u]) {
+                if (--indegree[v] == 0) {
+                    queue.add(v);
+                }
+            }
+        }
+        
+        // in case there are cycles in the graph
+        if (index < numCourses) return new int[0];
+        
+        return order;
+    }
+	
+		public static void main(String args[] ) throws IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		String str ;
+		String[] prereq;
+		int courses,nprerequisites;
+		courses = Integer.parseInt(br.readLine());
+		nprerequisites=Integer.parseInt(br.readLine());
+		int[][] prerequisites=new int[nprerequisites][2];
+
+	   for(int i=0; i<nprerequisites; i++)
+	   {
+		   str = br.readLine();
+		   prereq = str.split(" ");
+		   prerequisites[i]=Arrays.asList(prereq).stream().mapToInt(Integer::parseInt).toArray();
+	   }  	   
+	   int[] result=new Test().findOrder(courses, prerequisites);
+	   //Arrays.sort(result);
+	   System.out.println(Arrays.toString(result));
+	} 
+}
+
+
+
+/*program-3 CP_U_IV_TOPOLOGICAL SORT:- Parallel Courses
+
+There are N courses, labelled from 1 to N.
+
+We are given relations[i] = [X, Y], representing a prerequisite relationship between course X and course Y: course X has to be studied before course Y.
+
+In one semester you can study any number of courses as long as you have studied all the prerequisites for the course you are studying.
+
+Return the minimum number of semesters needed to study all courses.  If there is no way to study all the courses, return -1.
+
+EXAMPLE-1:
+
+Input: N = 3, relations = [[1,3],[2,3]]
+Output: 2
+Explanation: 
+In the first semester, courses 1 and 2 are studied. In the second semester, course 3 is studied.
+
+Example-2:
+Input: N = 3, relations = [[1,2],[2,3],[3,1]]
+Output: -1
+Explanation: 
+No course can be studied because they depend on each other.
+
+
+
+
+case =1
+input =3
+3
+1 3
+2 3
+3 1
+output =-1
+
+case =2
+input =3
+2
+1 3
+2 3
+output =2
+
+case =3
+input =10
+10
+1 3
+2 3
+3 4
+7 6
+4 6
+5 6
+6 8
+6 9
+8 10
+9 10
+output =6
+
+case =4
+input =10
+10
+1 5
+2 5
+3 5
+4 5
+5 8
+6 8
+7 8
+8 10
+7 9
+9 10
+output =4
+
+case =5
+input =15
+16
+1 5
+2 5
+3 6
+4 6
+5 7
+6 7
+7 9
+6 8
+8 9
+9 10
+9 11
+10 12
+11 13
+12 14
+13 14
+14 15
+output =8
+
+*/
+
+
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.*;
+
+public class Test
+{
+    private int maxPathLength = Integer.MIN_VALUE;
+    private boolean hasCycle = false;
+
+    public int minimumDays(int N, int[][] relations) {
+        HashMap<Integer, LinkedList<Integer>> graph = new HashMap<>();
+        for(int[] relation: relations){
+            graph.putIfAbsent(relation[0], new LinkedList<>());
+            graph.get(relation[0]).add(relation[1]);
+        }
+		// I initialized with N+1 element to make indexing easier but we only need N
+        int[] depth = new int[N+1];
+        boolean[] onStack = new boolean[N+1];
+        for(int i = 1; i <= N; i++) dfs(i, onStack, depth, graph);
+        return hasCycle ? -1 : maxPathLength;
+    }
+
+    private int dfs(int root, boolean[] onStack, int[] depth, HashMap<Integer, LinkedList<Integer>> graph){
+        if (onStack[root]) hasCycle = true;
+        if (depth[root] > 0 || hasCycle) return depth[root];
+        onStack[root] = true;
+        int max = 0;
+        // Find the longest path from the neighbor courses
+		if (graph.containsKey(root)) {
+            for (int neighbor : graph.get(root)) {
+                max = Math.max(max, dfs(neighbor, onStack, depth, graph));
+            }
+        }
+        onStack[root] = false;
+        depth[root] = max+1;
+        maxPathLength = Math.max(maxPathLength, depth[root]);
+        return depth[root];
+    }	 
+	public static void main(String args[] ) throws IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		String str ;
+		String[] rel;
+		int levels,nrelations;
+		levels = Integer.parseInt(br.readLine());
+		nrelations=Integer.parseInt(br.readLine());
+		int[][] relations=new int[nrelations][2];
+
+	   for(int i=0; i<nrelations; i++)
+	   {
+		   str = br.readLine();
+		   rel = str.split(" ");
+		   relations[i]=Arrays.asList(rel).stream().mapToInt(Integer::parseInt).toArray();
+	   }  	   
+	   System.out.println(new Test().minimumDays(levels,relations));
+	} 
+}

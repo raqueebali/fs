@@ -1,0 +1,13 @@
+query 2
+
+
+/*Write a query to fetch the number of employees working in the department ‘HR’.*/
+
+mysql> select * from EmployeeInfo where Department="HR";
++-------+----------+----------+------------+---------+----------------+------------+--------+
+| EmpID | EmpFname | EmpLname | Department | Project | Address        | DOB        | Gender |
++-------+----------+----------+------------+---------+----------------+------------+--------+
+|     1 | Sanjay   | Mehra    | HR         | P1      | Hyderabad(HYD) | 1976-12-01 | M      |
+|     4 | Sonia    | Kulkarni | HR         | P1      | Hyderabad(HYD) | 1992-05-02 | F      |
++-------+----------+----------+------------+---------+----------------+------------+--------+
+2 rows in set (0.00 sec)

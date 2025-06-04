@@ -1,0 +1,17 @@
+query 8
+
+/*
+Write a query to retrieve the EmpFname and EmpLname in a single column as “FullName”. The first name and the last name must be separated with space.*/
+
+
+mysql> select concat(EmpFname," ",EmpLname) as FullName from EmployeeInfo;
++----------------+
+| FullName       |
++----------------+
+| Sanjay Mehra   |
+| Ananya Mishra  |
+| Rohan Diwan    |
+| Sonia Kulkarni |
+| Ankit Kapoor   |
++----------------+
+5 rows in set (0.04 sec)

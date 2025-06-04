@@ -1,0 +1,24 @@
+query 9
+
+ Write a query find number of employees whose DOB is between 02/05/1970 to 31/12/1975 and are grouped according to gender
+ 
+ 
+ 
+mysql> select Gender from EmployeeInfo where DOB between "1970-05-02" and "1975-12-31" group by Gender;
+Empty set (0.00 sec)
+
+SELECT Gender, COUNT(*) as NumEmployees
+FROM EmployeeInfo
+WHERE DOB BETWEEN '1970-05-02' AND '1975-12-31'
+GROUP BY Gender;
+
+
+
+
+mysql> select count(Gender),Gender from EmployeeInfo where DOB between "1970-01-01" and "1980-12-31" group by Gender;
++---------------+--------+
+| count(Gender) | Gender |
++---------------+--------+
+|             2 | M      |
++---------------+--------+
+1 row in set (0.00 sec)

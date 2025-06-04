@@ -1,0 +1,39 @@
+query 15
+
+
+/*
+Write a query to fetch the department-wise count of employees sorted by department’s count in ascending order.
+
+*/
+
+mysql> select count(EmpID),Department from EmployeeInfo order by Department asc;
++--------------+------------+
+| count(EmpID) | Department |
++--------------+------------+
+|            5 | HR         |
++--------------+------------+
+1 row in set (0.00 sec)
+
+
+mysql> select count(EmpID) from EmployeeInfo order by Department asc;
++--------------+
+| count(EmpID) |
++--------------+
+|            5 |
++--------------+
+1 row in set (0.00 sec)
+
+
+
+mysql> SELECT Department, COUNT(*) as NumEmployees
+    -> FROM EmployeeInfo
+    -> GROUP BY Department
+    -> ORDER BY NumEmployees ASC;
++------------+--------------+
+| Department | NumEmployees |
++------------+--------------+
+| Account    |            1 |
+| HR         |            2 |
+| Admin      |            2 |
++------------+--------------+
+3 rows in set (0.04 sec)

@@ -1,0 +1,165 @@
+prog 2 testcase 3(failed[66.67/100])  working in leetcode
+
+/*
+
+You are given a string num, representing a large integer. Return the largest-valued odd integer (as a string) that is a non-empty substring of num, or an empty string "" if no odd integer exists.
+
+A substring is a contiguous sequence of characters within a string.
+
+ 
+Example 1:
+Input: num = "52"
+Output: "5"
+Explanation: The only non-empty substrings are "5", "2", and "52". "5" is the only odd number.
+
+Example 2:
+Input: num = "4206"
+Output: ""
+Explanation: There are no odd numbers in "4206".
+
+Example 3:
+Input: num = "35427"
+Output: "35427"
+Explanation: "35427" is already an odd number.
+
+
+
+case=1
+input=
+52
+output=
+5
+case=2
+input=
+4206
+output=
+no odd number
+case=3
+input=
+35427
+output=
+already an odd number
+
+
+
+*/
+
+import java.util.*;
+class Test{
+    public String Odd(String s){
+        int len=s.length();
+        
+        for(int i=len-1;i>=0;i--){
+             if((s.charAt(i)-'0')%2==1)
+                return s.substring(0,i+1);
+             
+        }
+        
+        
+        return "no odd number";
+    }
+    public static void main(String[]args){
+        Scanner sc=new Scanner(System.in);
+        String s=sc.next();
+        System.out.println(new Test().Odd(s));
+    }
+}
+
+prog 1
+
+/*
+
+Given a string s, return the length of the longest substring between two equal characters, excluding the two characters. If there is no such substring return -1.
+
+A substring is a contiguous sequence of characters within a string.
+
+ 
+
+Example 1:
+
+Input: s = "aa"
+Output: 0
+Explanation: The optimal substring here is an empty substring between the two 'a's.
+Example 2:
+
+Input: s = "abca"
+Output: 2
+Explanation: The optimal substring here is "bc".
+Example 3:
+
+Input: s = "cbzxy"
+Output: -1
+Explanation: There are no characters that appear twice in s.
+ 
+
+Constraints:
+
+1 <= s.length <= 300
+s contains only lowercase English letters.
+
+
+Approach:
+
+1.Store each char along with their position in a HashMap.
+2.If a char occurs again, calc their index diffrences.
+3.return the max difference.
+
+
+Complexity
+Time complexity: O(n)
+Space complexity: O(n) - (in worst case HashMap stores each char present in the string)
+
+
+case=1
+input=
+aa
+output=
+0
+
+case=2
+input=
+abca
+output=
+2
+
+case=3
+input=
+cbzxy
+
+output=
+-1
+
+
+
+*/
+
+import java.util.*;
+class Test{
+    public static void main(String[] args) {
+	    Scanner sc=new Scanner(System.in);
+	    String s=sc.next();
+	    System.out.print(new Test().fun(s));
+    }
+	public int fun(String s){
+	    int max=0;
+        Set<Character>hs=new HashSet<>();
+        for(int i=0;i<s.length();i++){
+            hs.add(s.charAt(i));
+        }
+	    for(int i=0;i<s.length();i++){
+	        char ch=s.charAt(i);
+	        int n=s.lastIndexOf(ch);
+            
+	        if((n-i-1)>max){
+	            max=n-i-1;
+	        }
+	    }
+        if(hs.size()==s.length()){
+            return -1;
+        }
+	    if(hs.size()<s.length() && max==0){
+	        return 0;
+	    }
+	    return max;
+	}
+}

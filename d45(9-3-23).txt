@@ -1,0 +1,147 @@
+prog 1
+
+/*
+Given the root of a binary tree, return its maximum depth.
+
+A binary tree's maximum depth is the number of nodes along the longest path from the root node down to 
+the farthest leaf node.
+
+Example 1:
+Input: root = [3,9,20,null,null,15,7]
+Output: 3
+
+Example 2:
+Input: root = [1,null,2]
+Output: 2
+
+
+
+case=1
+output=
+3
+
+
+*/
+import java.util.*;
+class TreeNode {
+    int val;
+    TreeNode left;
+    TreeNode right;
+
+    TreeNode(int val) {
+        this.val = val;
+    }
+}
+
+class Test{
+    public int maxDepth(TreeNode root) {
+        if (root == null) {
+            return 0;
+        }
+        
+        int leftDepth = maxDepth(root.left);
+        int rightDepth = maxDepth(root.right);
+        
+        return 1 + Math.max(leftDepth, rightDepth);
+    }
+    public static void main(String[] args) {
+        // Create a binary tree
+        TreeNode root = new TreeNode(3);
+        root.left = new TreeNode(9);
+        root.right = new TreeNode(20);
+        root.right.left = new TreeNode(15);
+        root.right.right = new TreeNode(7);
+
+        // Calculate the maximum depth of the binary tree
+        Test t = new Test();
+        int maxDepth = t.maxDepth(root);
+
+        // Print the maximum depth
+        System.out.println(maxDepth);
+    }
+}
+
+
+
+
+prog2
+
+
+/*
+111. Minimum Depth of Binary Tree
+
+Given a binary tree, find its minimum depth.
+
+The minimum depth is the number of nodes along the shortest path from the root node down to the nearest leaf node.
+
+Note: A leaf is a node with no children.
+
+ 
+
+Example 1:
+
+
+Input: root = [3,9,20,null,null,15,7]
+Output: 2
+
+
+Example 2:
+Input: root = [2,null,3,null,4,null,5,null,6]
+Output: 5
+ 
+
+Constraints:
+
+The number of nodes in the tree is in the range [0, 105].
+-1000 <= Node.val <= 1000
+
+
+case=1
+output=
+2
+
+*/
+import java.util.*;
+class TreeNode{
+    int data;
+    TreeNode left;
+    TreeNode right;
+    TreeNode(int item){
+        data=item;
+        left=right=null;
+    }
+}
+
+class Test{
+    TreeNode root;
+    int mindepth(){
+        return mindepth(root);
+    }
+    public int mindepth(TreeNode root){
+        if(root==null)
+            return 0;
+        
+        if(root.left==null && root.right==null)
+            return 1;
+        
+        if(root.left==null)
+            return mindepth(root.right)+1;
+        
+        if(root.right==null)
+            return mindepth(root.left)+1;
+        
+        
+        return Math.min(mindepth(root.left),mindepth(root.right))+1;
+    }
+    public static void main(String[]args){
+        TreeNode root = new TreeNode(3);
+        root.left = new TreeNode(9);
+        root.right = new TreeNode(20);
+        root.right.left = new TreeNode(15);
+        root.right.right = new TreeNode(7);
+        
+        Test t=new Test();
+        int mindepth=t.mindepth(root);
+        System.out.println(mindepth);
+    }
+}

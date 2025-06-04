@@ -1,0 +1,259 @@
+competitive programming prog1
+
+/*
+Mr. Athreya is a beginner in computer programming.
+He is given an integer D, a decimal value. 
+Your task is to count the 1's in the BCD form of each integer N and store 
+the count in an array of size D+1, where N is in the range of  0<= N <= D.
+ 
+Example of BCD :
+Given an integer I=10 , The BCD of I is '1010', and 1's count is 2.
+ 
+NOTE: Can you solve it in O(D) time?
+ 
+Input Format:
+-------------
+An integer D, the decimal value.
+ 
+Output Format:
+--------------
+Print the array of D+1 integers.
+ 
+ 
+Sample Input-1:
+---------------
+3
+ 
+Sample Output-1:
+----------------
+0 1 1 2
+
+
+Sample Input-2:
+---------------
+6
+ 
+Sample Output-2:
+----------------
+0 1 1 2 1 2 2
+
+*/
+import java.util.*;
+class Test{
+    public static void main(String[]args){
+        Scanner sc=new Scanner(System.in);
+        int n=sc.nextInt();
+        int []arr=new int[n+1];
+        for(int i=0;i<=n;i++){
+            arr[i]=Integer.bitCount(i);
+        }
+        System.out.println(Arrays.toString(arr));
+    }
+}
+
+
+
+
+prog2
+/*Convert characters to uppercase or lowercase:
+This trick tests your knowledge of uppercase and lowercase characters in binary. You can convert any character, ch, to the opposite case using ch ^= 32.
+
+This is because the binary representation of lowercase and uppercase letters are nearly identical, with only 1 bit of difference.
+
+Using the XOR operation lets us toggle that single bit and swap it to the opposite value, therefore making a lowercase character uppercase or vice versa.
+
+
+case=1
+input=
+kMIt
+
+output=
+KmiT
+
+
+*/
+import java.util.*;
+class Test{
+    
+    public static String toggle(char[]a){
+        for(int i=0;i<a.length;i++){
+            a[i]^=32;
+        }
+        return new String(a);
+    }
+    public static void main(String[]args){
+        Scanner sc=new Scanner(System.in);
+        String s=sc.next();
+        s=toggle(s.toCharArray());
+        System.out.println(s);
+    }
+}
+
+
+
+PROG 4
+
+/*
+Reverse bits of a given 32 bits unsigned integer.
+
+Note:
+
+Note that in some languages, such as Java, there is no unsigned integer type. In this case, both input and output will be given as a signed integer type. They should not affect your implementation, as the integer's internal binary representation is the same, whether it is signed or unsigned.
+In Java, the compiler represents the signed integers using 2's complement notation. Therefore, in Example 2 above, the input represents the signed integer -3 and the output represents the signed integer -1073741825.
+ 
+
+Example 1:
+
+Input: n = 00000010100101000001111010011100
+Output:    964176192 (00111001011110000010100101000000)
+Explanation: The input binary string 00000010100101000001111010011100 represents the unsigned integer 43261596, so return 964176192 which its binary representation is 00111001011110000010100101000000.
+
+
+Example 2:
+
+Input: n = 11111111111111111111111111111101
+Output:   3221225471 (10111111111111111111111111111111)
+Explanation: The input binary string 11111111111111111111111111111101 represents the unsigned integer 4294967293, so return 3221225471 which its binary representation is 10111111111111111111111111111111.
+ 
+
+Constraints:
+
+The input must be a binary string of length 32
+
+
+
+
+
+
+
+case=1
+input=
+00000010100101000001111010011100
+output=
+964176192
+case=2
+input=
+11111111111111111111111111111101
+output=
+3221225471
+
+
+*/
+import java.util.*;
+class Test{
+    public static void main (String[] args) {
+        Scanner sc=new Scanner (System.in);
+        String str=sc.next();
+        StringBuilder sb=new StringBuilder(str);
+        sb.reverse();
+         str=new String(sb);
+         long num =Long.parseLong(str,2);
+         System.out.println(num);
+    }
+}
+
+
+prog 3
+
+/*
+
+Write a function that takes the binary representation of an unsigned integer and returns 
+the number of '1' bits it has (also known as the Hamming weight).
+
+Note:
+
+Note that in some languages, such as Java, there is no unsigned integer type. 
+In this case, the input will be given as a signed integer type. It should not affect your implementation, 
+as the integer's internal binary representation is the same, whether it is signed or unsigned.
+In Java, the compiler represents the signed integers using 2's complement notation.
+Therefore, in Example 3, the input represents the signed integer. -3.
+ 
+
+Example 1:
+
+Input: n = 00000000000000000000000000001011
+Output: 3
+Explanation: The input binary string 00000000000000000000000000001011 has a total of three '1' bits.
+
+Example 2:
+
+Input: n = 00000000000000000000000010000000
+Output: 1
+Explanation: The input binary string 00000000000000000000000010000000 has a total of one '1' bit.
+
+Example 3:
+
+Input: n = 11111111111111111111111111111101
+Output: 31
+Explanation: The input binary string 11111111111111111111111111111101 has a total of thirty one '1' bits.
+ 
+
+Constraints:
+
+The input must be a binary string of length 32.
+
+Thoughts:
+This is very simple and straight forward. Just have a pivot integer, which iterates over all single bit integer of 32-bit.
+
+case=1
+input=
+00000000000000000000000000001011
+output=
+3
+case=2
+input=
+00000000000000000000000010000000
+output=
+1
+case=3
+input=
+11111111111111111111111111111101
+output=
+31
+
+
+
+
+*/
+// import java.util.*;
+// class Test{
+//     public int hamming(int n){
+//         int mask=1;
+//         int count=0;
+//         for(int i=0;i<32;i++){
+//             if((n&mask)!=0){
+//                 count++;
+//             }
+//             mask=(mask<<1);
+//         }
+//         return count;
+//     }
+//     public static void main(String[]args){
+//         Scanner sc=new Scanner(System.in);
+//         int n=sc.nextInt();
+//         System.out.println(new Test().hamming(n));
+//     }
+// }
+
+import java.util.*;
+class Test{
+    public static void main (String[] args) {
+        Scanner sc=new Scanner(System.in);
+        String str=sc.next();
+        int ct=0;
+        // int n=Integer.parseInt(str,2);
+        // int count =0;
+        // while (n!=0){
+        //     count +=(n & 1);
+        //     n>>>=1;
+        // }
+        // System.out.println(count);
+        for(int i=0;i<str.length();i++){
+            if(str.charAt(i)=='1'){
+                ct=ct+1;
+            }
+        }
+        System.out.println(ct);
+    }
+}
+

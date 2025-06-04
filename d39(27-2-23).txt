@@ -1,0 +1,231 @@
+/*
+Given a non-negative integer num, Return its encoding string.
+
+The encoding is done by converting the integer to a string using a secret function that you should deduce
+from the following table:
+
+
+n	f(n)
+-------
+0	""
+1	"0"
+2	"1"
+3	"00"
+4	"01"
+5	"10"
+6	"11"
+7	"000"
+
+Example 1:
+
+Input: num = 23
+Output: "1000"
+
+
+Example 2:
+
+Input: num = 107
+Output: "101100"
+
+
+Constraints:
+
+0 <= num <= 10^9
+
+case =1
+input =24
+output ="1001"
+
+case =2
+input =45
+output ="01110"
+
+case =3
+input =234
+output ="1101011"
+
+
+*/
+import java.util.*;
+class Test{
+    public static String encode(int n){
+        int len=0;
+        while(n>=(1<<len)){
+            n-=(1<<len);
+            len++;
+        }
+        String ans="";
+        for(int i=0;i<len;i++,n>>=1){
+            if((n&1)!=0){
+                ans+='1';
+            }
+            else{
+                ans+='0';
+            }
+        }
+        StringBuffer sb=new StringBuffer(ans);
+        sb.reverse();
+        return sb.toString();
+    }
+    
+    public static void main(String[]args){
+        Scanner sc=new Scanner(System.in);
+        int n=sc.nextInt();
+        System.out.println(encode(n));
+    }
+}
+
+
+
+
+prog 4
+
+/*
+
+You are given two strings order and s. All the characters of order are unique and were sorted in some custom order previously.
+
+Permute the characters of s so that they match the order that order was sorted. More specifically, if a character x occurs before a character y in order, then x should occur before y in the permuted string.
+
+Return any permutation of s that satisfies this property.
+
+ 
+
+Example 1:
+Input: order = "cba", s = "abcd"
+Output: "cbad"
+Explanation: 
+"a", "b", "c" appear in order, so the order of "a", "b", "c" should be "c", "b", and "a". 
+Since "d" does not appear in order, it can be at any position in the returned string. "dcba", "cdba", "cbda" are also valid outputs.
+
+Example 2:
+Input: order = "cbafg", s = "abcd"
+Output: "cbad"
+ 
+
+Constraints:
+
+1 <= order.length <= 26
+1 <= s.length <= 200
+order and s consist of lowercase English letters.
+All the characters of order are unique.
+
+
+case=1
+input=
+cba
+abcd
+
+output=
+cbad
+
+case=2
+input=
+cbafg
+abcd
+output=
+cbad
+
+
+
+*/
+import java.util.*;
+class Test{
+    public String permutate(String order,String s){
+        int le=order.length();
+        int len=s.length();
+        int []count=new int[26];
+        for(char c:s.toCharArray()){
+            count[c-'a']++;
+        }
+        StringBuilder sb=new StringBuilder();
+        for(char c:order.toCharArray()){
+            while(count[c-'a']-->0){
+                sb.append(c);
+            }
+        }
+        for(char c='a';c<='z';c++){
+            while(count[c-'a']-->0){
+                sb.append(c);
+            }
+        }
+        return sb.toString();
+    }
+    public static void main(String[]args){
+        Scanner sc=new Scanner(System.in);
+        String o=sc.next();
+        String s=sc.next();
+        System.out.println(new Test().permutate(o,s));
+    }
+}
+
+prog 3
+
+/*
+Given a palindromic string of lowercase English letters palindrome, replace exactly one character with any lowercase English letter so that the resulting string is not a palindrome and that it is the lexicographically smallest one possible.
+
+Return the resulting string. If there is no way to replace a character to make it not a palindrome, return an empty string.
+
+A string a is lexicographically smaller than a string b (of the same length) if in the first position where a and b differ, a has a character strictly smaller than the corresponding character in b. For example, "abcc" is lexicographically smaller than "abcd" because the first position they differ is at the fourth character, and 'c' is smaller than 'd'.
+
+ 
+
+Example 1:
+
+Input: palindrome = "abccba"
+Output: "aaccba"
+Explanation: There are many ways to make "abccba" not a palindrome, such as "zbccba", "aaccba", and "abacba".
+Of all the ways, "aaccba" is the lexicographically smallest.
+
+
+Example 2:
+
+Input: palindrome = "a"
+Output: ""
+Explanation: There is no way to replace a single character to make "a" not a palindrome, so return an empty string.
+ 
+
+Constraints:
+
+1 <= palindrome.length <= 1000
+palindrome consists of only lowercase English letters.
+
+
+case=1
+input=
+abccba
+output=
+aaccba
+
+case=2
+input=
+a
+output=
+null
+
+
+*/
+import java.util.*;
+class Test{
+    public static String palindrome(String s){
+        
+        int n=s.length();
+        if(n==1){
+            return null;
+        }
+        char []arr=s.toCharArray();
+        for(int i=0;i<n/2;i++){
+            if(arr[i]!='a'){
+                arr[i]='a';
+                return String.valueOf(arr);
+            }
+        }
+        arr[n-1]='b';
+        return String.valueOf(arr);
+    }
+    
+    public static void main(String[]args){
+        Scanner sc=new Scanner(System.in);
+        String s=sc.next();
+        System.out.print(palindrome(s));
+    }
+}

@@ -1,0 +1,113 @@
+/*Java program to print connected components in an undirected graph Using DFS
+
+Definition:
+
+A connected component or simply component of an undirected graph is a subgraph in which each pair of nodes is connected with each other via a path.
+
+Let’s try to simplify it further, though. A set of nodes forms a connected component in an undirected graph if any node from the set of nodes can reach any other node by traversing edges. The main point here is reachability.
+
+In connected components, all the nodes are always reachable from each other.
+
+
+
+CASE=1
+
+enter number of vertices
+5
+enter number of  edges
+3
+enter edges
+1
+0
+2
+1
+3
+4
+Following are connected components
+0 1 2
+3 4
+
+CASE=2
+input=
+enter number of vertices
+10
+enter number of  edges
+8
+enter edges
+1                                                                                                                       
+2                                                                                                                       
+1                                                                                                                       
+3                                                                                                                       
+2                                                                                                                       
+4                                                                                                                       
+4                                                                                                                       
+3                                                                                                                       
+5                                                                                                                       
+6                                                                                                                       
+5                                                                                                                       
+7                                                                                                                       
+6                                                                                                                       
+7                                                                                                                       
+8                                                                                                                       
+9   
+output=
+Following are connected components
+0                                                                                                                       
+1 2 4 3                                                                                                                 
+5 6 7                                                                                                                   
+8 9                                                                                                                     
+
+*/
+import java.util.*;
+class Graph{
+    public static void main(String[] args){
+        Scanner sc = new Scanner(System.in);
+        System.out.println("enter number of vertices");
+        int v = sc.nextInt();
+        System.out.println("enter number of edges");
+        int e = sc.nextInt();
+        ArrayList<Integer>[] adjList = new ArrayList[v];
+        for(int i=0;i<v;i++){
+            adjList[i] = new ArrayList<>();
+        }
+        System.out.println("enter edges");
+        for(int i=0;i<e;i++){
+            int p = sc.nextInt();
+            int q = sc.nextInt();
+            adjList[p].add(q);
+            adjList[q].add(p);
+        }
+        ArrayList<ArrayList<Integer>> connectedComponents = resultantConnectedComponents(v, adjList);
+        System.out.println("Following are connected components");
+        for (ArrayList<Integer> component : connectedComponents) {
+            for (int node : component) {
+                System.out.print(node + " ");
+            }
+            System.out.println();
+        }
+    }
+    public static ArrayList<ArrayList<Integer>> resultantConnectedComponents(int v, ArrayList<Integer>[] adjList){
+        ArrayList<ArrayList<Integer>> components = new ArrayList<>();
+        boolean[] visited = new boolean[v];
+
+        for (int i = 0; i < v; i++) {
+            if (!visited[i]) {
+                ArrayList<Integer> component = new ArrayList<>();
+                dfs(i, visited, component, adjList);
+                components.add(component);
+            }
+        }
+
+        return components;
+    }
+    public static void dfs(int node, boolean[] visited, ArrayList<Integer> component, ArrayList<Integer>[] adjList) {
+        visited[node] = true;
+        component.add(node);
+
+        for (int neighbor : adjList[node]) {
+            if (!visited[neighbor]) {
+                dfs(neighbor, visited, component, adjList);
+            }
+        }
+    }
+}

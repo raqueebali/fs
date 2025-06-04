@@ -1,0 +1,22 @@
+query 10
+/*
+Write a query to fetch all the records from the EmployeeInfo table ordered by EmpLname in descending order and Department in the ascending order.
+
+
+*/
+
+
+
+
+
+mysql> select * from EmployeeInfo order by EmpLname desc ,Department asc;
++-------+----------+----------+------------+---------+----------------+------------+--------+
+| EmpID | EmpFname | EmpLname | Department | Project | Address        | DOB        | Gender |
++-------+----------+----------+------------+---------+----------------+------------+--------+
+|     2 | Ananya   | Mishra   | Admin      | P2      | Delhi(DEL)     | 1968-05-02 | F      |
+|     1 | Sanjay   | Mehra    | HR         | P1      | Hyderabad(HYD) | 1976-12-01 | M      |
+|     4 | Sonia    | Kulkarni | HR         | P1      | Hyderabad(HYD) | 1992-05-02 | F      |
+|     5 | Ankit    | Kapoor   | Admin      | P2      | Delhi(DEL)     | 1994-07-03 | M      |
+|     3 | Rohan    | Diwan    | Account    | P3      | Mumbai(BOM)    | 1980-01-01 | M      |
++-------+----------+----------+------------+---------+----------------+------------+--------+
+5 rows in set (0.00 sec)

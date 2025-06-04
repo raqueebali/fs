@@ -1,0 +1,86 @@
+/*
+ Mr.Suresh asked Mr.Ramesh to create a grid with set of words in such a way that if you read the word in i-th row and the word in i-th column should be equal.
+Mr. Ramesh created the grid accordingly.
+   
+Now it’s your aim to check whether Mr.Ramesh’s grid has satisfied conditions given by Mr.Suresh.
+   
+If satisfied, print "true". Otherwise print "false"
+  
+Constraints:
+-------------
+N should be a positive integer.
+0 < word[i].length <= N
+word[i+1].length <= word[i].length
+    
+Input Format:
+-------------
+Line-1 -> an integer N, number of words
+Line-2 -> N space separated words.
+   
+Output Format:
+--------------
+Print a boolean result.
+   
+Sample Input-1:
+---------------
+4
+kmit made idol tell
+  
+Sample Output-1:
+----------------
+true
+   
+Explanation:
+-------------
+Given grid looks as follows:
+k m i t
+m a d e
+i d o l
+t e l l
+if you read the words in every i-th row and i-th column,
+both the words are same. so return true.
+    
+    
+Sample Input-2:
+---------------
+5
+abcde bcde cde de e
+   
+Sample Output-2:
+----------------
+true
+*/
+import java.util.*;
+class Test{
+    public boolean Valid(List<String>l){
+        int n=l.size();
+        for(int i=0;i<n;i++){
+            String row=l.get(i);
+            if(!row.equals(getCol(i,l))){
+                return false;
+            }
+        }
+        return true;
+    }
+    public String getCol(int col,List<String>l){
+        StringBuilder sb=new StringBuilder();
+        for(int i=0;i<l.size();i++){
+            String word=l.get(i);
+            if(col<word.length()){
+                sb.append(word.charAt(col));
+            }
+        }
+        return sb.toString();
+    }
+    public static void main(String[]args){
+        Scanner sc=new Scanner(System.in);
+        List<String>l=new ArrayList<>();
+        int n=sc.nextInt();
+        String[]a =new String[n];
+        for(int i=0;i<n;i++){
+            a[i]=sc.next();
+            l.add(a[i]);
+        }
+        System.out.println(new Test().Valid(l));
+    }
+}

@@ -1,0 +1,145 @@
+/*Write a java program to check if a given positive number is a strong number. 
+A strong number is a number whose sum of factorial of each digit is the number itself. 
+Print 1 if it is strong number, else 0.
+
+example: 145
+1! + 4! + 5! = 1+24+120 = 145
+
+Sample:
+Input=145
+output=1
+
+Input=128
+output=0
+
+*/
+import java.util.*;
+class Test{
+    public static void main (String[] args) {
+        Scanner sc=new Scanner(System.in);
+        int n=sc.nextInt();
+        int fact,ld;
+        int i;
+        int t=0;
+        int temp=n;
+        while(n!=0){
+            i=1;
+            fact=1;
+            ld=n%10;
+            while(i<=ld){
+                fact=fact*i;
+                i++;
+            }
+            t=t+fact;
+            n=n/10;
+        }
+        if(t==temp){
+            System.out.println("1");
+        }
+        else{
+            System.out.println("0");
+        }
+    }
+}
+
+
+
+/*
+Mr. Parandamayya is working with Strings.
+He is given a String S. He has to find the palindromes in S, 
+A palindrome can be a substring of S (Strictly substrings only, not subsequences).
+
+Your task is to find the count the number of palindromes can be formed from S.
+
+NOTE: Count each occurence of palindromes if duplicate substrings found. 
+
+Input Format:
+-------------
+A string S
+
+Output Format:
+--------------
+Print an integer, number of palindromes.
+
+
+Sample Input-1:
+---------------
+divider
+
+Sample Output-1:
+----------------
+9
+
+Explanation:
+-------------
+Palindromes are d, i, v, i, d, e, r, ivi, divid
+
+Sample Input-2:
+---------------
+abcdef
+
+Sample Output-2:
+----------------
+6
+
+Explanation:
+-------------
+Palindromes are a, b, c, d, e, f.
+
+
+
+==== testcases ====
+case =1
+input =radarracecar
+output =19
+
+case =2
+input =tattarrattat
+output =24
+
+case =3
+input =nolemonnomelon
+output =21
+
+case =4
+input =wasitcatisawinmygymmadam
+output =29
+
+case =5
+input =wasitcatisawinmygymmadammadamitsaradarborroworrob
+output =74
+
+*/
+import java.util.*;
+public class Test{
+    public static int Palindrome(String str,int n){
+        if(str==null||str.length()==0){
+            return 0;
+        }
+        boolean [][]arr=new boolean[n][n];
+        int count=str.length();
+        for(int i=0;i<str.length();i++){
+            arr[i][i]=true;
+        }
+        for(int i=n-2;i>=0;i++){
+            for(int j=i;j<n;j++){
+                if(str.charAt(i)==str.charAt(j)){
+                    if(arr[i+1][j-1]||j-1==1){
+                        arr[i][j]=true;
+                        count++;
+                    }
+                }
+            }
+        }
+        return count;
+    }
+    
+    public static void main(String[]args){
+        Scanner sc=new Scanner(System.in);
+        String str=sc.nextLine();
+        System.out.println(Palindrome(str));
+    }
+}//output not working
+
+
+

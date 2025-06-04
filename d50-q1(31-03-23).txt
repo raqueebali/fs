@@ -1,0 +1,113 @@
+query 1
+
+/*
+
+Write a query to fetch the EmpFname from the EmployeeInfo table in upper case and use the ALIAS name as EmpName.
+
+table name: EmployeeInfo
+
+EmpID   EmpFname  EmpLname   Department  Project    Address             DOB         Gender
+1       Sanjay    Mehra          HR          P1     Hyderabad(HYD)    01/12/1976      M
+2       Ananya    Mishra        Admin        P2      Delhi(DEL)       02/05/1968      F
+3       Rohan     Diwan         Account      P3      Mumbai(BOM)      01/01/1980      M
+4       Sonia   Kulkarni        HR          P1      Hyderabad(HYD)      02/05/1992     F
+5       Ankit   Kapoor          Admin       P2          Delhi(DEL)      03/07/1994     M
+
+
+table name:  EmployeePosition
+EmpID   EmpPosition     DateOfJoining     Salary
+
+1           Manager      01/05/2022       500000  
+2           Executive    02/05/2022       75000
+3            Manager      01/05/2022      90000
+2           Lead          02/05/2022      85000
+1           Executive     01/05/2022      300000
+
+
+*/
+
+mysql> use fs;
+Database changed
+mysql> show tables;
++--------------+
+| Tables_in_fs |
++--------------+
+| fs           |
++--------------+
+1 row in set (0.01 sec)
+
+mysql> create table EmployeeInfo(EmpID int,EmpFname varchar(50),EmpLname varchar(50),Department varchar(50),Project varchar(50),Address varchar(50), DOB date,Gender char);
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> insert into EmployeeInfo(1,"Sanjay","Mehra","HR","P1","Hyderabad(HYD)","1976/12/01","M");
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '1,"Sanjay","Mehra","HR","P1","Hyderabad(HYD)","1976/12/01","M")' at line 1
+mysql> insert into EmployeeInfo values(1,"Sanjay","Mehra","HR","P1","Hyderabad(HYD)","1976/12/01","M");
+Query OK, 1 row affected, 1 warning (0.00 sec)
+
+mysql> insert into EmployeeInfo values(1,"Sanjay","Mehra","HR","P1","Hyderabad(HYD)","1976/12/01","M");^C
+mysql> insert into EmployeeInfo valuesinsert into fs values(2,"Ananya","Mishra","Admin","P2","Delhi(DEL)","1968/05/02","F"),(3,"Rohan","Diwan","Account","P3","Mumbai(BOM)","1980/01/01","M"),(4,"Sonia","Kulkarni","HR","P1","Hyderabad(HYD)","1992/05/02","F"),(5,"Ankit","Kapoor","Admin","P2","Delhi(DEL)","1994/07/03","M");
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'valuesinsert into fs values(2,"Ananya","Mishra","Admin","P2","Delhi(DEL)","1968/' at line 1
+mysql> insert into EmployeeInfo values(2,"Ananya","Mishra","Admin","P2","Delhi(DEL)","1968/05/02","F"),(3,"Rohan","Diwan","Account","P3","Mumbai(BOM)","1980/01/01","M"),(4,"Sonia","Kulkarni","HR","P1","Hyderabad(HYD)","1992/05/02","F"),(5,"Ankit","Kapoor","Admin","P2","Delhi(DEL)","1994/07/03","M");
+Query OK, 4 rows affected, 4 warnings (0.01 sec)
+Records: 4  Duplicates: 0  Warnings: 4
+
+mysql> select * from EmployeeInfo;
++-------+----------+----------+------------+---------+----------------+------------+--------+
+| EmpID | EmpFname | EmpLname | Department | Project | Address        | DOB        | Gender |
++-------+----------+----------+------------+---------+----------------+------------+--------+
+|     1 | Sanjay   | Mehra    | HR         | P1      | Hyderabad(HYD) | 1976-12-01 | M      |
+|     2 | Ananya   | Mishra   | Admin      | P2      | Delhi(DEL)     | 1968-05-02 | F      |
+|     3 | Rohan    | Diwan    | Account    | P3      | Mumbai(BOM)    | 1980-01-01 | M      |
+|     4 | Sonia    | Kulkarni | HR         | P1      | Hyderabad(HYD) | 1992-05-02 | F      |
+|     5 | Ankit    | Kapoor   | Admin      | P2      | Delhi(DEL)     | 1994-07-03 | M      |
++-------+----------+----------+------------+---------+----------------+------------+--------+
+5 rows in set (0.00 sec)
+
+mysql> create table EmployeePosition(EmpId int,EmpPosition char(50),DateOfJoining date,Salary int(10));
+Query OK, 0 rows affected, 1 warning (0.01 sec)
+
+mysql> insert into EmployeePosition values(1,"Manager","2022/05/01",500000);
+Query OK, 1 row affected, 1 warning (0.01 sec)
+
+mysql> insert into EmployeePosition values(2,"Executive","2022/05/02",75000);
+Query OK, 1 row affected, 1 warning (0.00 sec)
+
+mysql> insert into EmployeePosition values(3,"Manager","2022/05/01",90000);
+Query OK, 1 row affected, 1 warning (0.01 sec)
+
+mysql> insert into EmployeePosition values(2,"Lead","2022/05/02",85000);
+Query OK, 1 row affected, 1 warning (0.00 sec)
+
+mysql> insert into EmployeePosition values(1,"Executive","2022/05/01",300000);
+Query OK, 1 row affected, 1 warning (0.00 sec)
+
+mysql> select * from EmployeePosition;
++-------+-------------+---------------+--------+
+| EmpId | EmpPosition | DateOfJoining | Salary |
++-------+-------------+---------------+--------+
+|     1 | Manager     | 2022-05-01    | 500000 |
+|     2 | Executive   | 2022-05-02    |  75000 |
+|     3 | Manager     | 2022-05-01    |  90000 |
+|     2 | Lead        | 2022-05-02    |  85000 |
+|     1 | Executive   | 2022-05-01    | 300000 |
++-------+-------------+---------------+--------+
+5 rows in set (0.00 sec)
+
+
+
+/* solution*/
+
+
+select upper(EmpFname) as EmpName from EmployeeInfo;
++---------+
+| EmpName |
++---------+
+| SANJAY  |
+| ANANYA  |
+| ROHAN   |
+| SONIA   |
+| ANKIT   |
++---------+
+5 rows in set (0.00 sec)
+
+

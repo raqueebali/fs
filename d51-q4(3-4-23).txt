@@ -1,0 +1,14 @@
+query 14
+
+/*
+ Write a query to fetch all employees who also hold the managerial position.
+ */
+ 
+ mysql> select * from EmployeePosition where EmpPosition="Manager";
++-------+-------------+---------------+--------+
+| EmpId | EmpPosition | DateOfJoining | Salary |
++-------+-------------+---------------+--------+
+|     1 | Manager     | 2022-05-01    | 500000 |
+|     3 | Manager     | 2022-05-01    |  90000 |
++-------+-------------+---------------+--------+
+2 rows in set (0.00 sec)

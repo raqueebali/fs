@@ -1,0 +1,139 @@
+/* Number of Connected Components in an Undirected Graph Using Union and Find Algorithms
+
+Problem:
+
+Given n nodes labeled from 0 to n - 1 and a list of undirected edges 
+(each edge is a pair of nodes), 
+write a function to find the number of connected components in an undirected graph.
+
+Example 1:
+     0          3
+     |          |
+     1 --- 2    4
+Given n = 5 and edges = [[0, 1], [1, 2], [3, 4]], return 2.
+
+Example 2:
+     0           4
+     |           |
+     1 --- 2 --- 3
+Given n = 5 and edges = [[0, 1], [1, 2], [2, 3], [3, 4]], return 1.
+
+Note:
+You can assume that no duplicate edges will appear in edges. 
+Since all edges are undirected, [0, 1] is the same as [1, 0] and thus will not appear
+together in edges.
+
+Input Format:
+-------------
+Line-1: Two space separated integers N and M, number of vertices and edges
+Next M lines: Two space separated integers vertex1, vertex2.
+ 
+Output Format:
+--------------
+Print an integer, number of regions formed.
+ 
+ 
+Sample Input-1:
+---------------
+5 4
+0 1
+0 2
+1 2
+3 4
+ 
+Sample Output-1:
+----------------
+2
+ 
+ 
+Sample Input-2:
+---------------
+5 6
+0 1
+0 2
+2 3
+1 2
+1 4
+2 4
+ 
+Sample Output-2:
+----------------
+1
+
+
+Test caese:
+
+case =1
+input =5 6
+0 1
+0 2
+2 3
+1 2
+1 4
+2 4
+output =1
+ 
+case =2
+input =5 4
+0 1
+0 2
+1 2
+3 4
+output =2
+ 
+case =3
+input =6 3
+0 1
+2 3
+4 5
+output =3
+ 
+
+
+*/
+import java.util.*;
+
+class Test 
+{
+    public int countComponents(int n, int[][] edges)
+    {
+        int[] parent = new int[n];
+        int[] size = new int[n];
+        for (int i = 0; i < n; i++) {
+            parent[i] = i;
+            size[i] = 1;
+        }
+        int components = n;
+        for (int[] e : edges) {
+            int p1 = findParent(parent, e[0]);
+            int p2 = findParent(parent, e[1]);
+            if (p1 != p2) {
+                if (size[p1] < size[p2]) { // Merge small size to large size
+                    size[p2] += size[p1];
+                    parent[p1] = p2;
+                } else {
+                    size[p1] += size[p2];
+                    parent[p2] = p1;
+                }
+                components--;
+            }
+        }
+        return components;
+    }
+    private int findParent(int[] parent, int i) {
+        if (i == parent[i]) return i;
+        return parent[i] = findParent(parent, parent[i]); // Path compression
+    }
+	
+	public static void main(String args[])
+	{
+		Scanner sc= new Scanner(System.in);
+		int n=sc.nextInt();
+		int e=sc.nextInt();
+		int edges[][]=new int[e][2]; 
+		for(int i=0;i<e;i++)
+			for(int j=0;j<2;j++)
+				edges[i][j]=sc.nextInt();
+		System.out.println(new Test().countComponents(n,edges));
+	}	
+}

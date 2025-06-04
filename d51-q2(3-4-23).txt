@@ -1,0 +1,38 @@
+query 12
+
+/*
+Write a query to fetch details of all employees excluding the employees with first names,
+“Sanjay” and “Sonia” from the EmployeeInfo table.
+
+*/
+
+mysql> select * from EmployeeInfo where EmpFname not like "S%";
++-------+----------+----------+------------+---------+-------------+------------+--------+
+| EmpID | EmpFname | EmpLname | Department | Project | Address     | DOB        | Gender |
++-------+----------+----------+------------+---------+-------------+------------+--------+
+|     2 | Ananya   | Mishra   | Admin      | P2      | Delhi(DEL)  | 1968-05-02 | F      |
+|     3 | Rohan    | Diwan    | Account    | P3      | Mumbai(BOM) | 1980-01-01 | M      |
+|     5 | Ankit    | Kapoor   | Admin      | P2      | Delhi(DEL)  | 1994-07-03 | M      |
++-------+----------+----------+------------+---------+-------------+------------+--------+
+3 rows in set (0.00 sec)
+
+
+mysql> select * from EmployeeInfo where EmpFname not like "S%";
++-------+----------+----------+------------+---------+-------------+------------+--------+
+| EmpID | EmpFname | EmpLname | Department | Project | Address     | DOB        | Gender |
++-------+----------+----------+------------+---------+-------------+------------+--------+
+|     2 | Ananya   | Mishra   | Admin      | P2      | Delhi(DEL)  | 1968-05-02 | F      |
+|     3 | Rohan    | Diwan    | Account    | P3      | Mumbai(BOM) | 1980-01-01 | M      |
+|     5 | Ankit    | Kapoor   | Admin      | P2      | Delhi(DEL)  | 1994-07-03 | M      |
++-------+----------+----------+------------+---------+-------------+------------+--------+
+3 rows in set (0.00 sec)
+
+mysql> select * from EmployeeInfo where EmpFname not in ("Sanjay", "Sonia");
++-------+----------+----------+------------+---------+-------------+------------+--------+
+| EmpID | EmpFname | EmpLname | Department | Project | Address     | DOB        | Gender |
++-------+----------+----------+------------+---------+-------------+------------+--------+
+|     2 | Ananya   | Mishra   | Admin      | P2      | Delhi(DEL)  | 1968-05-02 | F      |
+|     3 | Rohan    | Diwan    | Account    | P3      | Mumbai(BOM) | 1980-01-01 | M      |
+|     5 | Ankit    | Kapoor   | Admin      | P2      | Delhi(DEL)  | 1994-07-03 | M      |
++-------+----------+----------+------------+---------+-------------+------------+--------+
+3 rows in set (0.04 sec)

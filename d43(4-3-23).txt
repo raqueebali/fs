@@ -1,0 +1,263 @@
+prog 1
+
+/*You are given a 0-indexed integer array nums of even length.
+
+As long as nums is not empty, you must repetitively:
+
+Find the minimum number in nums and remove it.
+Find the maximum number in nums and remove it.
+Calculate the average of the two removed numbers.
+The average of two numbers a and b is (a + b) / 2.
+
+For example, the average of 2 and 3 is (2 + 3) / 2 = 2.5.
+Return the number of distinct averages calculated using the above process.
+
+Note that when there is a tie for a minimum or maximum number, any can be removed.
+
+Example 1:
+Input: nums = [4,1,4,0,3,5]
+Output: 2
+Explanation:
+1. Remove 0 and 5, and the average is (0 + 5) / 2 = 2.5. Now, nums = [4,1,4,3].
+2. Remove 1 and 4. The average is (1 + 4) / 2 = 2.5, and nums = [4,3].
+3. Remove 3 and 4, and the average is (3 + 4) / 2 = 3.5.
+Since there are 2 distinct numbers among 2.5, 2.5, and 3.5, we return 2.
+
+Example 2:
+Input: nums = [1,100]
+Output: 1
+Explanation:
+There is only one average to be calculated after removing 1 and 100, so we return 1.
+
+
+
+case=1
+input=
+6
+4 1 4 0 3 5
+output=
+2
+
+case=2
+input=
+2
+1 100
+output=
+1
+
+
+
+*/
+import java.util.*;
+class Test{
+    public static void main(String[]args){
+        Scanner sc=new Scanner(System.in);
+        int n=sc.nextInt();
+        int arr[]=new int[n];
+        for(int i=0;i<n;i++){
+            arr[i]=sc.nextInt();
+        }
+        System.out.println(new Test().avg(arr));
+    }
+    public int avg(int arr[]){
+        if(arr.length==2){
+            return 1;
+        }   
+        Set<Integer>set=new HashSet<>();
+        Queue<Integer>min=new PriorityQueue<>();
+        Queue<Integer>max=new PriorityQueue<>(Comparator.reverseOrder());
+        for(int i:arr){
+            max.add(i);
+            min.add(i);
+        }
+        for(int i=0;i<arr.length/2;i++){
+            set.add(min.poll()+max.poll());
+        }
+        return set.size();
+    }
+}
+
+
+prog 3
+
+/*
+
+You are given a 0-indexed circular string array words and a string target. A circular array means that the array's end connects to the array's beginning.
+
+Formally, the next element of words[i] is words[(i + 1) % n] and the previous element of words[i] is words[(i - 1 + n) % n], where n is the length of words.
+Starting from startIndex, you can move to either the next word or the previous word with 1 step at a time.
+
+Return the shortest distance needed to reach the string target. If the string target does not exist in words, return -1.
+
+ 
+
+Example 1:
+Input: words = ["hello","i","am","leetcode","hello"], target = "hello", startIndex = 1
+Output: 1
+Explanation: We start from index 1 and can reach "hello" by
+- moving 3 units to the right to reach index 4.
+- moving 2 units to the left to reach index 4.
+- moving 4 units to the right to reach index 0.
+- moving 1 unit to the left to reach index 0.
+The shortest distance to reach "hello" is 1.
+
+Example 2:
+Input: words = ["a","b","leetcode"], target = "leetcode", startIndex = 0
+Output: 1
+Explanation: We start from index 0 and can reach "leetcode" by
+- moving 2 units to the right to reach index 3.
+- moving 1 unit to the left to reach index 3.
+The shortest distance to reach "leetcode" is 1.
+
+Example 3:
+Input: words = ["i","eat","leetcode"], target = "ate", startIndex = 0
+Output: -1
+Explanation: Since "ate" does not exist in words, we return -1.
+
+
+
+
+case=1
+input=
+5
+hello
+i
+am
+leetcode
+hello
+hello
+1
+output=
+1
+case=2
+input=
+3
+a
+b
+leetcode
+leetcode
+0
+output=
+1
+case=3
+input=
+3
+i
+eat
+leetcod
+ate
+0
+output=
+-1
+*/
+import java.util.*;
+class Test{
+    public int dist(String[]words,String target,int index){
+        int len=words.length;
+        for(int i=0;i<len;i++){
+            if(words[(index+i+len)%len].equals(target)){
+                return i;
+            }
+            if(words[(index-i+len)%len].equals(target)){
+                return i;
+            }
+           
+        }
+        return -1;
+    }
+    public static void main(String[]args){
+        Scanner sc=new Scanner(System.in);
+        int n=sc.nextInt();
+        String word[]=new String[n];
+        for(int i=0;i<n;i++){
+            word[i]=sc.next();
+        }
+        String target=sc.next();
+        int index=sc.nextInt();
+        System.out.println(new Test().dist(word,target,index));
+    }
+}
+
+
+prog 2
+
+/*
+You are given a 0-indexed array of positive integers nums. Find the number of triplets (i, j, k) that meet
+ the following conditions:
+0 <= i < j < k < nums.length
+nums[i], nums[j], and nums[k] are pairwise distinct.
+In other words, nums[i] != nums[j], nums[i] != nums[k], and nums[j] != nums[k].
+Return the number of triplets that meet the conditions.
+
+ 
+
+Example 1:
+Input: nums = [4,4,2,4,3]
+Output: 3
+Explanation: The following triplets meet the conditions:
+- (0, 2, 4) because 4 != 2 != 3
+- (1, 2, 4) because 4 != 2 != 3
+- (2, 3, 4) because 2 != 4 != 3
+Since there are 3 triplets, we return 3.
+Note that (2, 0, 4) is not a valid triplet because 2 > 0.
+
+Example 2:
+Input: nums = [1,1,1,1,1]
+Output: 0
+Explanation: No triplets meet the conditions so we return 0.
+ 
+
+Constraints:
+
+3 <= nums.length <= 100
+1 <= nums[i] <= 1000
+
+case=1
+input=
+5
+4 4 2 4 3
+output=
+3
+
+case=2
+input=
+5
+1 1 1 1 1
+output=
+0
+
+
+*/
+import java.util.*;
+class Test{
+    public int unequalTriplets(int[] nums) {
+        Map<Integer, Integer> cnt = new HashMap<>();
+        for (int v : nums) {
+            cnt.put(v, cnt.getOrDefault(v, 0) + 1);
+        }
+        int ans = 0, a = 0;
+        int n = nums.length;
+        for (int b : cnt.values()) {
+            int c = n - a - b;
+            ans += a * b * c;
+            a += b;
+        }
+        return ans;
+    }
+public static void main(String args[])
+  {
+      Scanner sc=new Scanner(System.in);
+      int n1=sc.nextInt();
+ 	
+		int a1[]=new int[n1];
+		
+		for (int i=0;i<n1;i++)
+		{
+		a1[i]=sc.nextInt();
+		}
+		
+     
+      System.out.println(new Test().unequalTriplets(a1));
+  }
+}
+

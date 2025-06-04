@@ -1,0 +1,106 @@
+/*
+You are given a string s and an integer k. You can choose any character of the string
+and change it to any other uppercase English character. You can perform this operation at most k times.
+
+Return the length of the longest substring containing the same letter you can get after performing
+the above operations.
+
+ 
+
+Example 1:
+Input: s = "ABAB", k = 2
+Output: 4
+Explanation: Replace the two 'A's with two 'B's or vice versa.
+
+Example 2:
+Input: s = "AABABBA", k = 1
+Output: 4
+Explanation: Replace the one 'A' in the middle with 'B' and form "AABBBBA".
+The substring "BBBB" has the longest repeating letters, which is 4.
+There may exists other ways to achive this answer too.
+ 
+
+Procedure:
+
+Brute Force Solution:
+Let’s call a substring of the original string which can be converted into a substring of 
+repeated characters as homogeneous substring. Also for any substring,
+let us call the character which is occurring most number of times as the majority character.
+
+To convert a substring to a homogeneous substring with minimum number of character replacements, we need to change all non majority character to the majority character. for example, if my substring is “ABCBBB” , the majority character is “B”. Now, to convert it into homogeneous substring, the number of replacements it would take to convert the substring to a homogeneous substring will be exactly equal to no of non-majority characters.
+
+For the above substring, the number would be 2 (replacing A and C by B). 
+Therefore, if the number of non majority characters is more than k , 
+then we can never convert the substring to a homogeneous substring. We can implement 
+the above solution in O(n^2) time complexity.
+
+
+Optimized Solution:
+ we can use the sliding window technique.
+ This is because if any substring s[i...j]is non homogeneous then any substring
+ s[i...k] cannot be homogeneous where k > j.
+ 
+ 
+ Note: You do with any one procedure(brute force or sliding window)
+ 
+case=1
+input=
+ABAB
+2
+output=
+4
+
+case=2
+input=
+AABABBA
+1
+output=
+4
+
+*/
+import java.util.*;
+class Test{
+    public int longest(String str,int k){
+        int n=str.length();
+        HashMap<Character,Integer> m=new HashMap<>();
+        // for(int i=0;i<n;i++){
+        //     if(n-1<k){
+        //         str.substring(k+1);
+        //     }
+        //     else{
+        //         str.substring(k);
+        //     }
+        // }
+        // return n;
+        char ch='a';
+        int freq=0;
+        for(int i=0;i<n;i++){
+            m.put(str.charAt(i),m.getOrDefault(str.charAt(i),0)+1);
+            if(m.get(str.charAt(i))>freq){
+                freq=m.get(str.charAt(i));
+                ch=str.charAt(i);
+            }
+        }
+        int j=0,i=0,cnt=0,ans=0;
+        while(j<n){
+            if(str.charAt(j)!=ch){
+                cnt++;
+            }
+            while(cnt>k){
+                if(str.charAt(i)!=ch){
+                    cnt--;
+                }
+                i++;
+            }
+            ans=Math.max(ans,j-i+1);
+            j++;
+        }
+        return ans;
+    }
+    public static void main(String[]args){
+        Scanner sc=new Scanner(System.in);
+        String str=sc.next();
+        int k=sc.nextInt();
+        System.out.println(new Test().longest(str,k));
+    }
+}

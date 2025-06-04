@@ -1,0 +1,209 @@
+prog 1
+
+/*
+Given a string s consisting of lowercase English letters, return the first letter to appear twice.
+
+Note:
+
+A letter a appears twice before another letter b if the second occurrence of a is before the second occurrence of b.
+s will contain at least one letter that appears twice.
+ 
+
+Example 1:
+
+Input: s = "abccbaacz"
+Output: "c"
+Explanation:
+The letter 'a' appears on the indexes 0, 5 and 6.
+The letter 'b' appears on the indexes 1 and 4.
+The letter 'c' appears on the indexes 2, 3 and 7.
+The letter 'z' appears on the index 8.
+The letter 'c' is the first letter to appear twice, because out of all the letters the index of its second occurrence is the smallest.
+Example 2:
+
+Input: s = "abcdd"
+Output: "d"
+Explanation:
+The only letter that appears twice is 'd' so we return 'd'.
+ 
+
+Constraints:
+
+2 <= s.length <= 100
+s consists of lowercase English letters.
+s has at least one repeated letter.
+
+
+case=1
+input=
+abccbaacz
+outpu=
+c
+case=2
+input=
+abcdd
+outpu=
+d
+
+
+*/
+// import java.util.*;
+// class Test{
+//     public char twice(String s){
+//         int len=s.length();
+//         int ch[]=new int[26];
+//         for(int i=0;i<len;i++){
+//             int a=s.charAt(i)-'a';
+//             if(ch[a]==1){
+//                 return s.charAt(i);
+//             }
+//             ch[a]++;
+//         }
+//         return s.charAt(0);
+//     }
+//     public static void main(String[]args){
+//         Scanner sc=new Scanner(System.in);
+//         String s=sc.next();
+//         System.out.println(new Test().twice(s));
+//     }
+// }
+
+import java.util.*;
+class Test{
+    public static void main(String[]args){
+        Scanner sc=new Scanner(System.in);
+        String s=sc.next();
+        for(int i=0;i<s.length()-1;i++){
+            if(s.charAt(i)==s.charAt(i+1)){
+                System.out.println(s.charAt(i));
+                break;
+            }
+        }
+    }
+}
+
+
+
+prog2 
+
+
+/*
+You are given an integer array ranks and a character array suits. You have 5 cards where the ith card has a rank of ranks[i] and a suit of suits[i].
+
+The following are the types of poker hands you can make from best to worst:
+
+"Flush": Five cards of the same suit.
+"Three of a Kind": Three cards of the same rank.
+"Pair": Two cards of the same rank.
+"High Card": Any single card.
+Return a string representing the best type of poker hand you can make with the given cards.
+
+Note that the return values are case-sensitive.
+
+ 
+
+Example 1:
+
+Input: ranks = [13,2,3,1,9], suits = ["a","a","a","a","a"]
+Output: "Flush"
+Explanation: The hand with all the cards consists of 5 cards with the same suit, so we have a "Flush".
+Example 2:
+
+Input: ranks = [4,4,2,4,4], suits = ["d","a","a","b","c"]
+Output: "Three of a Kind"
+Explanation: The hand with the first, second, and fourth card consists of 3 cards with the same rank, so we have a "Three of a Kind".
+Note that we could also make a "Pair" hand but "Three of a Kind" is a better hand.
+Also note that other cards could be used to make the "Three of a Kind" hand.
+Example 3:
+
+Input: ranks = [10,10,2,12,9], suits = ["a","b","c","a","d"]
+Output: "Pair"
+Explanation: The hand with the first and second card consists of 2 cards with the same rank, so we have a "Pair".
+Note that we cannot make a "Flush" or a "Three of a Kind".
+ 
+
+Constraints:
+
+ranks.length == suits.length == 5
+1 <= ranks[i] <= 13
+'a' <= suits[i] <= 'd'
+No two cards have the same rank and suit.
+
+
+
+
+case=1
+input=
+5
+13 2 3 1 9
+5
+a a a a a 
+
+output=
+Flush
+case=2
+input=
+5
+4 4 2 4 4
+5
+d a a b c 
+output=
+Three of a Kind
+
+case=3
+input=
+5
+10 10 2 12 9
+5
+a b c a d 
+output=
+Pair
+*/
+import java.util.*;
+class Test{
+    public String hand(int[]rank,char[]suits){
+        HashMap<Integer,Integer>hm=new HashMap<>();
+        for(int i=0;i<rank.length;i++){
+            hm.put(rank[i],hm.getOrDefault(rank[i],0)+1);
+        }
+        HashMap<Character,Integer>h=new HashMap<>();
+        for(int i=0;i<suits.length;i++){
+            h.put(suits[i],h.getOrDefault(suits[i],0)+1);
+        }
+        for(int i:h.values()){
+            if(i==5){
+                return "Flush";
+            }
+        }
+        for(int i:hm.values()){
+            if(i>=3){
+                return "Three of a Kind";
+            }
+        }
+        for(int i:hm.values()){
+            if(i==2){
+                return "Pair";
+            }
+        }
+        for(int i:h.values()){
+            if(i==1){
+                return "High Card";
+            }
+        }
+        return "";
+    }
+    public static void main(String[]args){
+        Scanner sc=new Scanner(System.in);
+        int n=sc.nextInt();
+        int[]arr=new int[n];
+        for(int i=0;i<n;i++){
+            arr[i]=sc.nextInt();
+        }
+        int a=sc.nextInt();
+        char[]as=new char[a];
+        for(int i=0;i<a;i++){
+            as[i]=sc.next().charAt(0);
+        }
+        System.out.println(new Test().hand(arr,as));
+    }
+}

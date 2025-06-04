@@ -1,0 +1,180 @@
+/*Write a java program to create two objects for Student class(which contains 
+instance variables rollno, name, grade) initialize two objects one without parameters 
+and other with parameters following values
+502,raj,8.9
+Sample input:
+Enter student1 details:                                                                                                 
+501                                                                                                                     
+ram                                                                                                                     
+9.8
+output:
+Roll no:501     Name:ram      CGPA:9.8                                                                                
+Roll no:502     Name:raj        CGPA:8.9   
+*/
+import java.util.*;
+class Student{
+    int rollno;
+    String name;
+    float grade;
+    Student(int rollno,String name,float grade){
+        this.rollno=rollno;
+        this.name=name;
+        this.grade=grade;
+    }
+    void display(){
+        System.out.println("Roll no:"+this.rollno+"   "+"Name:"+this.name+" "+"   "+"CGPA:"+this.grade);
+    }
+}
+class Test{
+    public static void main(String[]args){
+        Scanner sc=new Scanner(System.in);
+        System.out.println("Enter student1 details:");
+        int i=sc.nextInt();
+        String s=sc.next();
+        float f=sc.nextFloat();
+        Student st=new Student(i,s,f);
+        Student st1=new Student(502,"raj",8.9f);
+        st.display();
+        st1.display();
+        
+    }
+}
+
+
+
+
+
+
+/*write a program to create an object for Employee class with default constructor,
+In default constructor invoke object with one string parameter (chaitanya), 
+in one parameterized constructor invoke object with two parameters (name, 25000), 
+in two parameterized constructor invoke object with three parameters(name, sal, Hyderabad) .
+
+
+Output:
+Employee Name: chaitanya
+Employee Salary: 25000
+Employee Address: Hyderabad
+*/
+
+class Employee{
+    String name;
+    int salary;
+    String address;
+    Employee(String n){
+        name=n;
+    }
+    Employee(String n,int s){
+        name=n;
+        salary=s;
+    }
+    Employee(String n,int s,String a){
+        name=n;
+        salary=s;
+        address=a;
+    }
+    void display(){
+        System.out.println("Employee Name: "+name);
+        System.out.println("Employee Salary: "+salary);
+        System.out.println("Employee Address: "+address);
+    }
+}
+
+class Test{
+    public static void main(String[]args){
+        Employee e=new Employee("chaitanya",25000,"Hyderabad");
+        e.display();
+    }
+    
+}
+
+
+
+
+
+/* write a java program to create Student class and initialize variables as 
+private(name, email, and gender) and create a parameterized constructor, also write getName(), 
+getGender(), getMail() to get values and setEmail() to initialize a new email,
+Also create a method toString to print the output as given.
+
+Output: 
+Hyderabad
+Hyderabad (m) at hyderabad@gmail.com
+name is: Hyderabad
+gender is: m
+email is: hyderabad@gmail.com
+*/
+
+class Student{
+    private String name;
+    private String gender;
+    private String email;
+    
+    Student(String name,String gender,String email){
+        this.name=name;
+        this.gender=gender;
+        this.email=email;
+    }
+    String getName(){
+        return name;
+    }
+    String getGender(){
+        return gender;
+    }
+    String getMail(){
+        return email;
+    }
+    void display(){
+        System.out.println("name is: "+name);
+        System.out.println("gender is: "+gender);
+        System.out.println("email is: "+email);
+    }
+    public String toString(){
+        
+        return(this.name+" "+"("+this.gender+")"+" at "+this.email);
+    }
+}
+class Test{
+    public static void main(String[]args){
+        String name="Hyderabad";
+        System.out.println(name);
+        Student s=new Student(name,"m","hyderabad@gmail.com");
+        System.out.println(s.toString());
+        s.display();
+    }
+}
+
+
+
+
+/* Write a program to create a base class as Kmit and initialize two variables(sections & subjects) 
+and create a constructor of the base class Kmit with parameters as variables initialized.
+ Then create a new class Ngit which extends Kmit and create a constructor and use super to call the base class. In Child class create a method as Display to return the output as follows.
+
+Output:
+No. of sections in CSE are 7
+No. of Subjects of CSE is 26
+*/
+class kmit{
+    int sections;
+    int subject;
+    kmit(int sections,int subject){
+       this.sections=sections;
+       this.subject=subject;
+   }
+   class ngit extends kmit{
+        ngit(){
+            super(7,26);
+        }
+   }
+   void display(){
+       System.out.println("No. of sections in CSE are "+sections);
+       System.out.println("No. of Subjects of CSE is "+subject);
+   }
+}
+class Test{
+   public static void main(String[]args){
+       kmit k=new kmit(7,26);
+       k.display();
+   }
+}

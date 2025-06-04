@@ -1,0 +1,110 @@
+// /* Write a program to create a base class as Kmit and initialize two variables(sections & subjects) 
+// and create a constructor of the base class Kmit with parameters as variables initialized.
+//  Then create a new class Ngit which extends Kmit and create a constructor and use super to call the base class. In Child class create a method as Display to return the output as follows.
+
+// Output:
+// No. of sections in CSE are 7
+// No. of Subjects of CSE is 26
+// */
+// class kmit{
+//     int sections;
+//     int subject;
+//     kmit(int sections,int subject){
+//        this.sections=sections;
+//        this.subject=subject;
+//    }
+//    class ngit extends kmit{
+//         ngit(){
+//             super(7,26);
+//         }
+//    }
+//    void display(){
+//        System.out.println("No. of sections in CSE are "+sections);
+//        System.out.println("No. of Subjects of CSE is "+subject);
+//    }
+// }
+// class Test{
+//    public static void main(String[]args){
+//        kmit k=new kmit(7,26);
+//        k.display();
+//    }
+// }
+// 
+
+/* 
+Write a java program to check whether the entered number is binary number or not
+
+Sample 1:
+input=111100
+output=true
+
+Sample 2 :
+input=1120 
+output=false
+*/
+// 
+/*
+Given an integer array nums , move all 0 's to the end of it while maintaining the relative order of the non-zero
+elements.
+Note that you must do this in-place without making a copy of the array.
+
+Example 1:
+Input: nums = [0,1,0,3,12]
+Output: [1,3,12,0,0]
+Example 2:
+Input: nums = [0]
+Output: [0]
+
+
+
+Test case=
+case=1
+input=
+5
+0 1 0 3 12
+output=
+1 3 12 0 0
+
+case=2
+input=
+1
+0
+output=
+0
+*/
+
+
+import java.util.*;
+class Test{
+    public static void main (String[] args) {
+        Scanner sc=new Scanner (System.in);
+      
+        int n= sc.nextInt();
+        int arr[]=new int [n];
+        for(int i=0;i<arr.length;i++){
+            arr[i]=sc.nextInt();
+        }
+        int j=0;
+        int i=0;
+        while(i<arr.length){
+                if(arr[i]!=0){
+                    int temp=arr[i];
+                    arr[i]=arr[j];
+                    arr[j]=temp;
+                    j++;
+                    
+                }
+                i++;
+                
+        }
+        
+      for(int k:arr){
+          
+          System.out.print(" " +k);
+      }
+        
+    }
+       
+        
+    
+}

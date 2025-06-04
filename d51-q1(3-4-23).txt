@@ -1,0 +1,27 @@
+query 11
+/*
+13. Write a query to fetch details of employees whose EmpLname ends with an alphabet ‘A’ and
+contains five alphabets.
+
+To fetch details mathcing a certain value, you have to use the LIKE operator in SQL.
+
+*/
+mysql> select * from EmployeeInfo where EmpLname like "%A";
++-------+----------+----------+------------+---------+----------------+------------+--------+
+| EmpID | EmpFname | EmpLname | Department | Project | Address        | DOB        | Gender |
++-------+----------+----------+------------+---------+----------------+------------+--------+
+|     1 | Sanjay   | Mehra    | HR         | P1      | Hyderabad(HYD) | 1976-12-01 | M      |
+|     2 | Ananya   | Mishra   | Admin      | P2      | Delhi(DEL)     | 1968-05-02 | F      |
++-------+----------+----------+------------+---------+----------------+------------+--------+
+2 rows in set (0.00 sec)
+
+
+
+
+mysql> select * from EmployeeInfo where EmpLname like "_____A";
++-------+----------+----------+------------+---------+------------+------------+--------+
+| EmpID | EmpFname | EmpLname | Department | Project | Address    | DOB        | Gender |
++-------+----------+----------+------------+---------+------------+------------+--------+
+|     2 | Ananya   | Mishra   | Admin      | P2      | Delhi(DEL) | 1968-05-02 | F      |
++-------+----------+----------+------------+---------+------------+------------+--------+
+1 row in set (0.00 sec)

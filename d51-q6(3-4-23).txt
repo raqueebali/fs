@@ -1,0 +1,24 @@
+/*
+ Write a query to calculate the even and odd records from a table.
+ Note:To retrieve the even records from a table, you have to use the MOD() function as follows:
+ */
+ 
+ mysql> select * from EmployeeInfo where mod(EmpID,2)=0;
++-------+----------+----------+------------+---------+----------------+------------+--------+
+| EmpID | EmpFname | EmpLname | Department | Project | Address        | DOB        | Gender |
++-------+----------+----------+------------+---------+----------------+------------+--------+
+|     2 | Ananya   | Mishra   | Admin      | P2      | Delhi(DEL)     | 1968-05-02 | F      |
+|     4 | Sonia    | Kulkarni | HR         | P1      | Hyderabad(HYD) | 1992-05-02 | F      |
++-------+----------+----------+------------+---------+----------------+------------+--------+
+2 rows in set (0.01 sec)
+
+mysql> select * from EmployeeInfo where mod(EmpID,2)=1;
++-------+----------+----------+------------+---------+----------------+------------+--------+
+| EmpID | EmpFname | EmpLname | Department | Project | Address        | DOB        | Gender |
++-------+----------+----------+------------+---------+----------------+------------+--------+
+|     1 | Sanjay   | Mehra    | HR         | P1      | Hyderabad(HYD) | 1976-12-01 | M      |
+|     3 | Rohan    | Diwan    | Account    | P3      | Mumbai(BOM)    | 1980-01-01 | M      |
+|     5 | Ankit    | Kapoor   | Admin      | P2      | Delhi(DEL)     | 1994-07-03 | M      |
++-------+----------+----------+------------+---------+----------------+------------+--------+
+3 rows in set (0.00 sec)
+

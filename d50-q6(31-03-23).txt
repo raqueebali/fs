@@ -1,0 +1,13 @@
+/*
+Write a query to find the names of employees that begin with ‘S’
+*/
+
+
+mysql> select * from EmployeeInfo where EmpFname like "S%";
++-------+----------+----------+------------+---------+----------------+------------+--------+
+| EmpID | EmpFname | EmpLname | Department | Project | Address        | DOB        | Gender |
++-------+----------+----------+------------+---------+----------------+------------+--------+
+|     1 | Sanjay   | Mehra    | HR         | P1      | Hyderabad(HYD) | 1976-12-01 | M      |
+|     4 | Sonia    | Kulkarni | HR         | P1      | Hyderabad(HYD) | 1992-05-02 | F      |
++-------+----------+----------+------------+---------+----------------+------------+--------+
+2 rows in set (0.00 sec)

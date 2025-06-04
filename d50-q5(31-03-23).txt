@@ -1,0 +1,14 @@
+query 5
+
+ Write q query to find all the employees whose salary is between 50000 to 100000.
+
+mysql> select * from EmployeePosition where salary between 50000 and 100000;
++-------+-------------+---------------+--------+
+| EmpId | EmpPosition | DateOfJoining | Salary |
++-------+-------------+---------------+--------+
+|     2 | Executive   | 2022-05-02    |  75000 |
+|     3 | Manager     | 2022-05-01    |  90000 |
+|     2 | Lead        | 2022-05-02    |  85000 |
++-------+-------------+---------------+--------+
+3 rows in set (0.00 sec)
+

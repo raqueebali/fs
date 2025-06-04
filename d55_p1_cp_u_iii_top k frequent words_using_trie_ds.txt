@@ -1,0 +1,111 @@
+/* Top k frequent words_Using_Tire DS
+
+Given an array of strings words and an integer k, return the k most frequent strings.
+
+Return the answer sorted by the frequency from highest to lowest. Sort the words with the same frequency by their lexicographical order.
+
+ 
+
+Example 1:
+
+Input: words = ["i","love","leetcode","i","love","coding"], k = 2
+Output: ["i","love"]
+Explanation: "i" and "love" are the two most frequent words.
+Note that "i" comes before "love" due to a lower alphabetical order.
+Example 2:
+
+Input: words = ["the","day","is","sunny","the","the","the","sunny","is","is"], k = 4
+Output: ["the","is","sunny","day"]
+Explanation: "the", "is", "sunny" and "day" are the four most frequent words, with the number of occurrence being 4, 3, 2 and 1 respectively.
+
+
+
+=== testcases ===
+case =1
+input =ball,are,case,doll,egg,case,doll,egg,are,are,egg,case,are,egg,are,case
+3
+output =[are, case, egg]
+
+case =2
+input =ball,are,case,doll,egg,case,doll,egg,are,are,egg,case,are,egg,are
+3
+output =[are, egg, case]
+
+case =3
+input =you,think,i,am,not,there,but,i,am,here,but,you,are,searching,somewhere,but,i,am,not,there
+4
+output =[am, but, i, not]
+
+case =4
+input =the,day,is,sunny,the,the,the,sunny,is,is
+4
+output =[the, is, sunny, day]
+
+case =5
+input =you,think,i,am,not,there,but,i,am,here,but,you,are,searching,somewhere,but,i,am,not,there,the,day,is,sunny,the,the,the,sunny,is,is,ball,are,case,doll,egg,case,doll,egg,are,are,egg,case,are,egg,are,case
+5
+output =[are, case, egg, the, am]
+
+case =6
+input =you,think,i,am,not,there,but,i,am,here,but,you,are,searching,somewhere,but,i,am,not,there,the,day,is,sunny,the,the,the,sunny,is,is,ball,are,case,doll,egg,case,doll,egg,are,are,egg,case,are,egg,are,case
+12
+output =[are, case, egg, the, am, but, i, is, doll, not, sunny, there]
+
+case =7
+input =peter,piper,picked,a,peck,of,pickled,peppers,a,peck,of,pickled,peppers,peter,piper,picked,if,peter,piper,picked,a,peck,of,pickled,peppers,where,is,the,peck,of,pickled,peppers,peter,piper,picked
+7
+output =[of, peck, peppers, peter, picked, pickled, piper]
+
+case =8
+input =peter,piper,picked,a,peck,of,pickled,peppers,a,peck,of,pickled,peppers,peter,piper,picked,if,peter,piper,picked,a,peck,of,pickled,peppers,where,is,the,peck,of,pickled,peppers,peter,piper,picked
+9
+output =[of, peck, peppers, peter, picked, pickled, piper, a, if]
+
+
+*/
+import java.util.*;
+
+public class Test{
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        //System.out.println("Enter the words separated by comma: ");
+        String input = scanner.nextLine();
+        String[] words = input.split(",");
+        //System.out.println("Enter the value of k: ");
+        int k = scanner.nextInt();
+        
+        List<String> result = topKFrequent(words, k);
+        System.out.println(result);
+    }
+
+    public static List<String> topKFrequent(String[] words, int k) {
+        // Create a map to store the frequency of each word
+        Map<String, Integer> freqMap = new HashMap<>();
+        for (String word : words) {
+            freqMap.put(word, freqMap.getOrDefault(word, 0) + 1);
+        }
+        
+        // Create a max heap to store the top k frequent words
+        PriorityQueue<String> maxHeap = new PriorityQueue<>((w1, w2) -> {
+            int freq1 = freqMap.get(w1);
+            int freq2 = freqMap.get(w2);
+            if (freq1 != freq2) {
+                return freq2 - freq1; // Sort by frequency in descending order
+            } else {
+                return w1.compareTo(w2); // If the frequency is the same, sort by lexicographical order
+            }
+        });
+        
+        // Add all the words to the max heap
+        maxHeap.addAll(freqMap.keySet());
+        
+        // Remove the top k words from the max heap and add them to the result list
+        List<String> result = new ArrayList<>();
+        for (int i = 0; i < k; i++) {
+            result.add(maxHeap.remove());
+        }
+        
+        return result;
+    }
+}

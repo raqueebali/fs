@@ -1,0 +1,19 @@
+query 3
+
+/*
+Write a query to retrieve the first four characters of  EmpLname from the EmployeeInfo table.*/
+
+
+
+
+mysql> select substring(EmpLname,1,4)from EmployeeInfo;
++-------------------------+
+| substring(EmpLname,1,4) |
++-------------------------+
+| Mehr                    |
+| Mish                    |
+| Diwa                    |
+| Kulk                    |
+| Kapo                    |
++-------------------------+
+5 rows in set (0.00 sec)

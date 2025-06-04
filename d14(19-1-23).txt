@@ -1,0 +1,142 @@
+/*
+Given a string s which consists of lowercase or uppercase letters, return the length of the longest
+palindrome that can be built with those letters.
+
+Letters are case sensitive, for example, "Aa" is not considered a palindrome here.
+
+Example 1:
+Input: s = "abccccdd"
+Output: 7
+
+Explanation:
+One longest palindrome that can be built is "dccaccd", whose length is 7.
+
+Example 2:
+Input: s = "a"
+Output: 1
+
+Example 3:
+Input: s = "bb"
+Output: 2
+
+Test cases:
+case=1
+input=
+abccccdd
+output=
+7
+
+case=2
+input=
+a
+output=
+1
+case=3
+input=
+bb
+output=
+2
+
+*/
+import java.util.*;
+class Test{
+    public static int Longest(String s){
+        
+        int ct=0;
+        HashSet<Character>hs=new HashSet<>();
+        for(int i=0;i<s.length();i++){
+            char c=s.charAt(i);
+            if(hs.contains(c)){
+                ct=ct+2;
+                hs.remove(c);
+            }
+            else{
+                hs.add(c);
+            }   
+        }
+        if(hs.size()>0){
+            ct++;
+        }
+        return ct;
+    }
+    
+    public static void main(String[]args){
+        Scanner sc=new Scanner(System.in);
+        String s=sc.nextLine();
+        System.out.println(Longest(s));
+    }
+}
+
+output working but test case 0/100
+
+
+/*
+
+Write a java program to sort the strings in lexicographical order
+
+Sample 
+input=
+Enter string word length
+4
+Enter string
+work hard dream big
+output=
+big dream hard work      
+
+*/
+import java.util.*;
+class Test{
+    public static void main(String[]args){
+        Scanner sc=new Scanner(System.in);
+        System.out.println("Enter string word length");
+        int n=sc.nextInt();
+        System.out.println("Enter string");
+        String[]s=new String[n];
+        int size=s.length;
+        for(int i=0;i<size;i++){
+            s[i]=sc.next();
+        }
+            for(int i=0;i<size;i++){
+                for(int j=i+1;j<n;j++){
+                    if(s[i].compareTo(s[j])>0){
+                        String temp=s[i];
+                        s[i]=s[j];
+                        s[j]=temp;
+                    }
+                }
+            }
+        for(int i=0;i<n;i++){
+            System.out.print(s[i]+" ");
+        }
+    }
+}
+
+
+
+/*Write a Java program to return a new string where the last two characters 
+of a given string are swapped.
+
+Sample:
+
+input=string
+output=strign
+
+Note: If length of stringis less than to print the given string
+
+*/
+
+import java.util.*;
+class Test{
+    public static String Swapping(String str){
+        if(str.length()<2||str.equals("")){
+            return str;
+        }
+        return str.substring(0, str.length()-2)+ str.charAt(str.length()-1) + str.charAt(str.length()-2);
+        
+    }
+    public static void main(String[]args){
+        Scanner sc=new Scanner(System.in);
+        String s=sc.nextLine();
+        System.out.println(Swapping(s));
+    }
+}

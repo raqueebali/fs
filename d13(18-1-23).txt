@@ -1,0 +1,121 @@
+/*
+Given a pattern and a string s , find if s follows the same pattern.
+Here follow means a full match, such that there is a bijection between a letter in pattern and a non-empty
+word in s .
+Example 1:
+Input: pattern = "abba", s = "dog cat cat dog"
+Output: true
+Example 2:
+Input: pattern = "abba", s = "dog cat cat fish"
+Output: false
+Example 3:
+Input: pattern = "aaaa", s = "dog cat cat dog"
+Output: false
+Example 4:
+Input: pattern = "abba", s = "dog dog dog dog"
+Output: false
+
+
+Test cases:
+case=1
+input=
+abba
+dog cat cat dog
+output=
+true
+
+case=2
+input=
+abba
+dog cat cat fish
+output=
+false
+
+case=3
+input=
+aaaa
+dog cat cat dog
+output=
+false
+
+case=4
+input=
+abba
+dog dog dog dog
+output=
+false
+*/
+import java.util.*;
+class Test{
+    public static Boolean wordsp(String pattern,String s){
+        Map<Character,String>hm=new HashMap<>();
+        String word[]=s.split(" ");
+        int n=word.length;
+        
+        if(pattern.length()!=word.length){
+        return false;
+        }
+        
+        for(int i=0;i<n;i++){
+            char ch=pattern.charAt(i);
+            if(hm.containsKey(ch)){
+                if(!word[i].equals(hm.get(ch)))
+                return false;
+            }
+            else{
+                if(hm.containsValue(word[i])){
+                    return false;
+                }
+                hm.put(ch,word[i]);
+            }
+        }
+        return true;
+    }
+    public static void main (String[] args) {
+        Scanner sc=new Scanner(System.in);
+        String p=sc.nextLine();
+        String s=sc.nextLine();
+        System.out.println(wordsp(p,s));
+    }
+}
+
+
+
+
+/*
+
+    Java program to find the number of charters in the longest word in the sentence. 
+     
+     Sample I/O:
+     
+     Enter any String:                                                                                                       
+     I am an intern at MicrosoftSolutions                                                                                    
+     18                                                                                                                      
+                                                                                                                             
+                                                                                                                             
+                   
+    
+    */
+import java.util.*;
+class Test{
+    public static int LongestW(String str){
+        int n=str.length();
+        int max=0,current=0;
+        for(int i=0;i<n;i++){
+            if(str.charAt(i)!=' '){
+                current++;
+            }
+            else{
+                max=Math.max(max,current);
+                current=0;
+            }
+        }
+        return Math.max(max,current);
+    }
+    public static void main (String[] args) {
+        Scanner sc=new Scanner(System.in);
+        System.out.println("Enter any String:");
+        String s=sc.nextLine();
+        System.out.println(LongestW(s));
+    }
+}

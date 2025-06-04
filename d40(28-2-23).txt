@@ -1,0 +1,232 @@
+prog 1
+/*The beauty of a string is the difference in frequencies between the most frequent and least frequent characters.
+
+For example, the beauty of "abaacc" is 3 - 1 = 2.
+Given a string s, return the sum of beauty of all of its substrings.
+
+ 
+
+Example 1:
+
+Input: s = "aabcb"
+Output: 5
+Explanation: The substrings with non-zero beauty are ["aab","aabc","aabcb","abcb","bcb"], each with beauty equal to 1.
+Example 2:
+
+Input: s = "aabcbaa"
+Output: 17
+ 
+ 
+ case=1
+input=
+aabcb
+output=
+5
+
+case=2
+input=
+aabcbaa
+output=
+17
+
+*/
+import java.util.*;
+class Test{
+    public int beauty(String s){
+        int len=s.length();
+        int count=0;
+        
+        for(int i=0;i<len;i++){
+            int []arr=new int[26];
+            for(int j=i;j<len;j++){
+                arr[s.charAt(j)-'a']++;
+                int max=Integer.MIN_VALUE;
+                int min=Integer.MAX_VALUE;
+            
+            for(int k=0;k<26;k++){
+                max=Math.max(max,arr[k]);
+                if(arr[k]!=0){
+                    min=Math.min(min,arr[k]);
+                }
+            }
+            count+=max-min;
+            }
+            
+        }
+        
+        return count;
+        
+    }
+    public static void main(String[]args){
+        Scanner sc=new Scanner(System.in);
+        String s=sc.next();
+        System.out.println(new Test().beauty(s));
+    }
+}
+
+
+prog 3
+/*
+
+Given a string s, sort it in decreasing order based on the frequency of the characters. The frequency of a character is the number of times it appears in the string.
+
+Return the sorted string. If there are multiple answers, return any of them.
+
+ 
+
+Example 1:
+
+Input: s = "tree"
+Output: "eert"
+Explanation: 'e' appears twice while 'r' and 't' both appear once.
+So 'e' must appear before both 'r' and 't'. Therefore "eetr" is also a valid answer.
+Example 2:
+
+Input: s = "cccaaa"
+Output: "aaaccc"
+Explanation: Both 'c' and 'a' appear three times, so both "cccaaa" and "aaaccc" are valid answers.
+Note that "cacaca" is incorrect, as the same characters must be together.
+Example 3:
+
+Input: s = "Aabb"
+Output: "bbAa"
+Explanation: "bbaA" is also a valid answer, but "Aabb" is incorrect.
+Note that 'A' and 'a' are treated as two different characters.
+ 
+
+Constraints:
+
+1 <= s.length <= 5 * 105
+s consists of uppercase and lowercase English letters and digits.
+
+
+Approach:
+Count the frequency of each character, and then sort the characters by frequency and out put the characters. We can use a two dimension array for the easy counting and sorting.
+
+
+case=1
+input=
+tree
+output=
+eert
+case=2
+input=
+cccaaa
+output=
+aaaccc
+case=3
+input=
+Aabb
+output=
+bbAa
+
+
+
+
+
+*/
+import java.util.*;
+class Test{
+    public static void main(String[]args){
+        Scanner sc=new Scanner(System.in);
+        String s=sc.next();
+        StringBuilder sb=new StringBuilder(s);
+        //char []a=s.toCharArray();
+        sb.reverse();
+        // for(int i=0;i<a.length;i++){
+        //     for (int j=i+1;j<a.length;j++){
+                
+        //         if(Character.toUpperCase(a[j])>Character.toLowerCase(a[i])){
+        //             char temp=a[i];
+        //             a[i]=a[j];
+        //             a[j]=temp;
+        //         }
+        //     }
+        // }
+        // String.valueOf(a);
+        System.out.println(sb);
+        
+    }
+}
+
+
+prog 2
+
+
+
+/*
+
+Given an array of integers nums and an integer k. A continuous subarray is called nice if there are k odd numbers on it.
+
+Return the number of nice sub-arrays.
+
+ 
+
+Example 1:
+
+Input: nums = [1,1,2,1,1], k = 3
+Output: 2
+Explanation: The only sub-arrays with 3 odd numbers are [1,1,2,1] and [1,2,1,1].
+Example 2:
+
+Input: nums = [2,4,6], k = 1
+Output: 0
+Explanation: There is no odd numbers in the array.
+Example 3:
+
+Input: nums = [2,2,2,1,2,2,1,2,2,2], k = 2
+Output: 16
+
+case=1
+input=
+5
+1 1 2 1 1
+3
+
+output=
+2
+case=2
+input=
+3
+2 4 6
+1
+output=
+0
+case=3
+input=
+10
+2 2 2 1 2 2 1 2 2 2 
+2
+output=
+16
+
+*/
+import java.util.*;
+class Test{
+    public int nice(int arr[],int n,int k){
+        int len=arr.length;
+        int count=0;
+        for(int i=0;i<n;i++){
+            int odd=0;
+            for(int j=i;j<n;j++){
+                if(arr[j]%2!=0)
+                    odd++;
+                
+                if(odd==k)
+                    count++;
+                
+            }
+        }
+        return count;
+    }
+    public static void main(String[]args){
+        Scanner sc=new Scanner(System.in);
+        int n=sc.nextInt();
+        int []arr=new int[n];
+        for(int i=0;i<n;i++){
+            arr[i]=sc.nextInt();
+        }
+        int k=sc.nextInt();
+        System.out.println(new Test().nice(arr,n,k));
+    }
+}

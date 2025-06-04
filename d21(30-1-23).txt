@@ -1,0 +1,224 @@
+/*write a java program for below pattern
+input=
+
+output=
+A B C D E F 
+A B C D E 
+A B C D 
+A B C 
+A B 
+A 
+A 
+A B 
+A B C 
+A B C D 
+A B C D E 
+A B C D E F
+
+*/
+
+import java.util.*;
+class Test{
+    public static void main(String[]args){
+        //Scanner sc=new Scanner(System.in);
+        //int n=sc.nextInt();
+        //char a=(char)n;
+        for(int i=5;i>=0;i--){
+            int n=65;
+            for(int j=0;j<=i;j++){
+                System.out.print((char)(n+j)+" ");
+            }
+            System.out.println(" ");
+        }
+        for(int i=0;i<=5;i++){
+            int n=65;
+            for(int j=0;j<=i;j++){
+                System.out.print((char)(n+j)+" ");
+            }
+            System.out.println(" ");
+        }
+    }
+}
+
+
+
+
+/*
+Given a binary array nums , return the maximum number of consecutive 1 's in the array.
+Example 1:
+Input: nums = [1,1,0,1,1,1]
+Output: 3
+Explanation: The first two digits or the last three digits are consecutive 1s. The maximum
+number of consecutive 1s is 3.
+
+Example 2:
+Input: nums = [1,0,1,1,0,1]
+Output: 2
+
+case=1
+input=6
+
+1 1 0 1 1 1
+output=
+3
+case=2
+input=
+6
+1 0 1 1 0 1
+
+output=
+2
+
+
+case=3
+input=
+8
+0 0 0 1 0 0 1 1
+output=
+2
+
+case=4
+input=
+10
+1 0 0 1 0 1 0 0 1 0
+output=
+1
+
+
+*/
+import java.util.*;
+class Test{
+    public int maxim(int nums[]){
+        int len=nums.length;
+        int count=0,max=0;
+        for(int i=0;i<len;i++){
+            if(nums[i]==1){
+                count++;
+            }
+            else{
+                max=Math.max(max,count);
+                count=0;
+            }
+        }
+        max=Math.max(max,count);
+        return max;
+    }
+    public static void main(String[]args){
+        Scanner sc=new Scanner(System.in);
+        int n=sc.nextInt();
+        int nums[]=new int[n];
+        int max=0;
+        for(int i=0;i<n;i++){
+            nums[i]=sc.nextInt();
+        }
+        System.out.println(new Test().maxim(nums));
+    }
+}
+
+
+
+
+/* Using  Efficient Approach — Sliding window
+
+You have an array of N positive integers and a positive integer K. 
+You have to find the Maximum Sum Subarray of size K.
+
+We will find the maximum sum, but it is easy to print the subarray too. We will see how.
+
+Example 1:
+Input:  [4 3 9 5 1 2], K = 3
+Output: 17
+Explanation: The subarray of size 3 with maximum sum 17 is [3 9 5].
+Example 2:
+Input:  [1 2 3], K = 2
+Output: 5
+Explanation: The subarray of size 2 with maximum sum is [2 3].
+
+Procedure:
+Notice that the sum of each window is calculated using the sum of the previous window and applying these two operations.
+
+1.When the window is sliding, one element goes out of the window. 
+Hence we subtract that element from the sum.
+
+2.The next element becomes part of the window. Hence we add that element to the sum.
+
+This algorithm needs only a single iteration of the array, making it linear 
+Unlike the brute force approach, we are not repeatedly calculating the sum of subarrays that
+already have been computed but using only two constant operations (addition and subtraction).
+
+
+est Case:
+[1,2,3,4,4,3,2,1],k=3
+Output:
+9
+[1,2,3],[2,3,4],[4,3,2],[3,2,1] are valid subarrays as they have k distinct elements.max sum among them is 9
+
+Test Case:
+[1,2,2] k=3
+Output:
+-1
+
+
+case=1
+array size                                                                                                              
+6                                                                                                                       
+enter array elements                                                                                                    
+4 3 9 5 1 2                                                                                                             
+window size                                                                                                             
+3                                                                                                                       
+17 
+case=2
+array size                                                                                                              
+9                                                                                                                       
+enter array elements                                                                                                    
+-2                                                                                                                      
+1                                                                                                                       
+-3                                                                                                                      
+4                                                                                                                       
+-1                                                                                                                      
+2                                                                                                                       
+1                                                                                                                       
+-5                                                                                                                      
+4                                                                                                                       
+window size                                                                                                             
+6   
+output=
+5                                                                                                                       
+
+*/
+import java.util.*;
+class Test{
+    public int maxsub(int arr[],int n,int k){
+        if(n<k){
+            return -1;
+        }
+        int len=arr.length;
+        int max=0;
+        
+        for(int i=0;i<k;i++)
+            max+=arr[i];
+            //max=ws-arr[i]+arr[i-k];
+        
+        int ws=max;
+        for(int i=k;i<n;i++){
+            //ws+=arr[i];
+            ws+=arr[i]-arr[i-k];
+            max=Math.max(max,ws);
+        }
+        return max;
+    }
+    public static void main(String[]args){
+        Scanner sc=new Scanner(System.in);
+        System.out.println("array size");
+        int n=sc.nextInt();
+        System.out.println("enter array elements");
+        int[] arr=new int[n];
+        for(int i=0;i<n;i++){
+            arr[i]=sc.nextInt();
+        }
+        System.out.println("window size");
+        int k=sc.nextInt();
+        System.out.println(new Test().maxsub(arr,n,k));
+    }
+}
+
